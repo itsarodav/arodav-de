@@ -1,0 +1,183 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import TopBar from '@/components/TopBar.astro';
+import MobileMenu from '@/components/MobileMenu.astro';
+import Hero from '@/components/Hero.astro';
+import SectionTitle from '@/components/SectionTitle.astro';
+import ProjectCard from '@/components/ProjectCard.astro';
+import ExperienceEntry from '@/components/ExperienceEntry.astro';
+import WritingCard from '@/components/WritingCard.astro';
+import Icon from '@/components/Icon.astro';
+import Footer from '@/components/Footer.astro';
+import { useTranslations, getArticlePath } from '@/i18n';
+
+const lang = 'en';
+const t = useTranslations(lang);
+
+const projects = [
+  { icon: 'terminal', name: t('work.mdds.name'), description: t('work.mdds.description'), href: '#' },
+  { icon: 'album', name: t('work.riffims.name'), description: t('work.riffims.description'), href: '#' },
+  { icon: 'theme', name: t('work.linkims.name'), description: t('work.linkims.description'), href: '#' },
+  { icon: 'bundle-box', name: t('work.prelude.name'), description: t('work.prelude.description'), href: '#' },
+];
+
+const articles = [
+  { title: 'Why learn about your tech stack?', date: '26/08/16', slug: 'why-learn-tech-stack' },
+  { title: 'Side projects for fun and learning', date: '26/08/25', slug: 'side-projects-for-fun' },
+];
+---
+
+<Layout title={t('site.title')} description={t('site.description')} lang={lang}>
+  <TopBar lang={lang} />
+  <MobileMenu lang={lang} currentPath="/" />
+
+  <main class="page-home">
+    <Hero lang={lang} />
+
+    <section class="section">
+      <SectionTitle title={t('section.work')} />
+      <div class="work-list">
+        {projects.map((project) => (
+          <ProjectCard
+            icon={project.icon}
+            name={project.name}
+            description={project.description}
+            href={project.href}
+          />
+        ))}
+      </div>
+    </section>
+
+    <section class="section">
+      <SectionTitle title={t('section.experience')} />
+
+      <h3 class="experience-company">{t('experience.odilo.company')}</h3>
+      <div class="experience-timeline">
+        <ExperienceEntry
+          company={t('experience.odilo.company')}
+          role={t('experience.odilo.role_current')}
+          period={t('experience.odilo.period_current')}
+          description={t('experience.odilo.description_current')}
+          bullets={[t('experience.odilo.bullet_1'), t('experience.odilo.bullet_2'), t('experience.odilo.bullet_3')]}
+          variant="timeline-current"
+        />
+        <ExperienceEntry
+          company={t('experience.odilo.company')}
+          role={t('experience.odilo.role_past')}
+          period={t('experience.odilo.period_past')}
+          description={t('experience.odilo.description_past')}
+          bullets={[t('experience.odilo.bullet_past_1'), t('experience.odilo.bullet_past_2')]}
+          variant="timeline-past"
+        />
+      </div>
+
+      <ExperienceEntry
+        company={t('experience.pakatnamu.company')}
+        role={t('experience.pakatnamu.role')}
+        period={t('experience.pakatnamu.period')}
+        description={t('experience.pakatnamu.description')}
+        variant="simple"
+      />
+
+      <ExperienceEntry
+        company={t('experience.peruke.company')}
+        role={t('experience.peruke.role')}
+        period={t('experience.peruke.period')}
+        description={t('experience.peruke.description')}
+        variant="simple"
+      />
+
+      <ExperienceEntry
+        company={t('experience.freelance.company')}
+        role={t('experience.freelance.role')}
+        period={t('experience.freelance.period')}
+        description={t('experience.freelance.description')}
+        variant="simple"
+      />
+    </section>
+
+    <section class="section writing-section">
+      <SectionTitle title={t('section.writing')} />
+      <div class="writing-preview">
+        {articles.map((article) => (
+          <WritingCard
+            title={article.title}
+            date={article.date}
+            href={getArticlePath(article.slug, lang)}
+          />
+        ))}
+      </div>
+      <a class="read-all" href="/writing">
+        {t('writing.read_all')}
+        <Icon name="arrow-right" size={16} color="currentColor" role="decorative" />
+      </a>
+    </section>
+
+    <Footer lang={lang} />
+  </main>
+</Layout>
+
+<style lang="scss">
+  @use '../styles/tokens' as *;
+
+  .work-list {
+    display: flex;
+    flex-direction: column;
+
+    &:hover :global(.project-card) {
+      opacity: 0.5;
+    }
+
+    &:hover :global(.project-card:hover) {
+      opacity: 1;
+    }
+  }
+
+  .experience-company {
+    font-size: $text-base;
+    font-weight: $font-semibold;
+    letter-spacing: $tracking-tight;
+    color: var(--color-text-primary);
+    margin-bottom: $space-4;
+  }
+
+  .experience-timeline {
+    margin-bottom: $space-6;
+  }
+
+  .writing-preview {
+    display: flex;
+    flex-direction: column;
+    gap: $space-2;
+    margin-bottom: $space-6;
+  }
+
+  .writing-section {
+    &:hover :global(.writing-card),
+    &:hover .read-all {
+      opacity: 0.5;
+    }
+
+    &:hover :global(.writing-card:hover),
+    &:hover .read-all:hover {
+      opacity: 1;
+    }
+  }
+
+  .read-all {
+    display: inline-flex;
+    align-items: baseline;
+    gap: $space-2;
+
+    :global(svg) {
+      align-self: center;
+      position: relative;
+      top: 1px;
+    }
+    font-size: $text-base;
+    font-weight: $font-semibold;
+    letter-spacing: $tracking-tight;
+    color: var(--color-text-primary);
+    transition: opacity 0.2s ease;
+  }
+</style>

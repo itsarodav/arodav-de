@@ -1,0 +1,21 @@
+@use '../tokens' as *;
+
+.page-home {
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: $space-4;
+  padding-top: $space-20;
+
+  @include respond-to(md) {
+    padding-top: $space-24;
+  }
+}
+
+.section {
+  margin-bottom: $space-14;
+
+  @include respond-to(md) {
+    margin-bottom: $space-16;
+  }
+}

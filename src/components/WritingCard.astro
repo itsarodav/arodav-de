@@ -1,0 +1,41 @@
+---
+interface Props {
+  title: string;
+  date: string;
+  href: string;
+}
+
+const { title, date, href } = Astro.props;
+---
+
+<a class="writing-card" href={href}>
+  <span class="writing-card__title">{title}</span>
+  <span class="writing-card__date">{date}</span>
+</a>
+
+<style lang="scss">
+  @use '../styles/tokens' as *;
+
+  .writing-card {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: $space-2 $space-3;
+    padding: $space-2 0;
+    transition: opacity 0.2s ease;
+
+    &__title {
+      font-size: $text-base;
+      font-weight: $font-semibold;
+      letter-spacing: $tracking-tight;
+      color: var(--color-text-primary);
+      transition: color 0.2s ease;
+    }
+
+    &__date {
+      font-size: $text-sm;
+      letter-spacing: $tracking-wide;
+      color: var(--color-text-tertiary);
+    }
+  }
+</style>

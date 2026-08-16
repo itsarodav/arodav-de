@@ -1,0 +1,30 @@
+@use 'colors' as *;
+
+// Light theme (default)
+:root,
+[data-theme="light"] {
+  --color-text-primary: #{$color-black};
+  --color-text-secondary: #{$color-dark-gray};
+  --color-text-tertiary: #{$color-mid-gray};
+  --color-bg-primary: #{$color-white};
+  --color-bg-secondary: #F5F5F5;
+  --color-border: #{$color-light-gray};
+  --color-link: #{$color-primary};
+  --color-link-hover: #0441b8;
+  --color-accent: #{$color-accent};
+  --color-icon-default: #303030;
+}
+
+// Dark theme
+[data-theme="dark"] {
+  --color-text-primary: #{$color-white};
+  --color-text-secondary: #{$color-light-gray};
+  --color-text-tertiary: #{$color-mid-gray};
+  --color-bg-primary: #0A0A0A;
+  --color-bg-secondary: #1A1A1A;
+  --color-border: #{$color-dark-gray};
+  --color-link: #4A8EFF;
+  --color-link-hover: #6AA3FF;
+  --color-accent: #2DD4A8;
+  --color-icon-default: #{$color-light-gray};
+}

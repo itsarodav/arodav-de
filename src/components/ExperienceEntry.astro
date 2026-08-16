@@ -1,0 +1,155 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  company: string;
+  role: string;
+  period: string;
+  description: string;
+  bullets?: string[];
+  variant?: 'timeline-current' | 'timeline-past' | 'simple';
+}
+
+const {
+  company,
+  role,
+  period,
+  description,
+  bullets = [],
+  variant = 'simple',
+} = Astro.props;
+---
+
+<div class:list={['experience-entry', `experience-entry--${variant}`]}>
+  {variant !== 'simple' ? (
+    <div class="experience-entry__timeline">
+      <div class="experience-entry__marker">
+        <Icon
+          name={variant === 'timeline-current' ? 'flower-point' : 'start-dot'}
+          size={10}
+          color="#CECECE"
+          role="decorative"
+        />
+      </div>
+      {variant === 'timeline-current' && (
+        <div class="experience-entry__line" />
+      )}
+    </div>
+  ) : null}
+  <div class="experience-entry__content">
+    <div class="experience-entry__header">
+      {variant === 'simple' && (
+        <span class="experience-entry__company-inline">{company}</span>
+      )}
+      <span class="experience-entry__role">{role}</span>
+      <span class="experience-entry__period">{period}</span>
+    </div>
+    <p class="experience-entry__description">{description}</p>
+    {bullets.length > 0 && (
+      <ul class="experience-entry__bullets">
+        {bullets.map((bullet) => (
+          <li class="experience-entry__bullet">{bullet}</li>
+        ))}
+      </ul>
+    )}
+  </div>
+</div>
+
+<style lang="scss">
+  @use '../styles/tokens' as *;
+
+  .experience-entry {
+    &--timeline-current,
+    &--timeline-past {
+      display: flex;
+      gap: $space-3;
+    }
+
+    &--simple {
+      margin-bottom: $space-6;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    &__timeline {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex-shrink: 0;
+      width: 10px;
+      padding-top: $space-1;
+    }
+
+    &__marker {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    &__line {
+      width: 1px;
+      flex: 1;
+      border-left: 1px dashed $color-light-gray;
+      margin-top: $space-2;
+    }
+
+    &__content {
+      flex: 1;
+      padding-bottom: $space-4;
+    }
+
+    &__company-inline {
+      font-size: $text-base;
+      font-weight: $font-semibold;
+      letter-spacing: $tracking-tight;
+      color: var(--color-text-primary);
+    }
+
+    &__header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: $space-2;
+      margin-bottom: $space-3;
+    }
+
+    &__role {
+      font-size: $text-base;
+      font-weight: $font-semibold;
+      letter-spacing: $tracking-tight;
+      color: var(--color-text-primary);
+    }
+
+    &__period {
+      font-size: $text-sm;
+      letter-spacing: $tracking-wide;
+      color: var(--color-text-tertiary);
+    }
+
+    &__description {
+      font-size: $text-base;
+      line-height: $line-normal;
+      letter-spacing: $tracking-normal;
+      color: var(--color-text-secondary);
+      margin-bottom: $space-3;
+    }
+
+    &__bullets {
+      list-style: disc;
+      padding-left: $space-5;
+      display: flex;
+      flex-direction: column;
+      gap: $space-2;
+    }
+
+    &__bullet {
+      font-size: $text-base;
+      line-height: $line-normal;
+      letter-spacing: $tracking-normal;
+      color: var(--color-text-secondary);
+    }
+  }
+</style>

@@ -1,0 +1,45 @@
+---
+import Layout from './Layout.astro';
+import TopBar from '@/components/TopBar.astro';
+import MobileMenu from '@/components/MobileMenu.astro';
+import Footer from '@/components/Footer.astro';
+import { type Lang, getWritingPath } from '@/i18n';
+
+interface Props {
+  title: string;
+  description: string;
+  date: Date;
+  lang: Lang;
+}
+
+const { title, description, date, lang } = Astro.props;
+
+const formattedDate = date.toLocaleDateString(lang === 'es' ? 'es-ES' : 'en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+
+const backLabel = lang === 'es' ? '← Volver a escritos' : '← Back to writing';
+const writingPath = getWritingPath(lang);
+const currentPath = Astro.url.pathname;
+---
+
+<Layout title={`${title} -Andrea Robles Dávila`} description={description} lang={lang}>
+  <TopBar lang={lang} />
+  <MobileMenu lang={lang} currentPath={currentPath} />
+
+  <main class="page-article">
+    <a class="article-header__back" href={writingPath}>{backLabel}</a>
+    <header class="article-header">
+      <h1 class="article-header__title">{title}</h1>
+      <time class="article-header__date" datetime={date.toISOString()}>
+        {formattedDate}
+      </time>
+    </header>
+    <article class="article-content">
+      <slot />
+    </article>
+    <Footer lang={lang} />
+  </main>
+</Layout>

@@ -1,0 +1,57 @@
+---
+import Icon from './Icon.astro';
+import { useTranslations, type Lang } from '@/i18n';
+
+interface Props {
+  label: string;
+  lang: Lang;
+  tag?: 'h1' | 'h2' | 'span';
+}
+
+const { label, lang, tag: Tag = 'h1' } = Astro.props;
+const t = useTranslations(lang);
+const homePath = lang === 'es' ? '/es' : '/';
+---
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a class="breadcrumb__home" href={homePath} aria-label={t('nav.home')}>
+    <Icon name="home" size={14} color="currentColor" role="decorative" />
+  </a>
+  <span class="breadcrumb__separator" aria-hidden="true">/</span>
+  <Tag class="breadcrumb__current">{label}</Tag>
+</nav>
+
+<style lang="scss">
+  @use '../styles/tokens' as *;
+
+  .breadcrumb {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-2;
+    margin-bottom: $space-8;
+
+    &__home {
+      display: inline-flex;
+      align-items: center;
+      color: var(--color-text-tertiary);
+      transition: color 0.2s ease;
+
+      &:hover {
+        color: $color-dark-gray;
+      }
+    }
+
+    &__separator {
+      font-size: $text-sm;
+      color: var(--color-text-tertiary);
+      user-select: none;
+    }
+
+    &__current {
+      font-size: $text-base;
+      font-weight: $font-medium;
+      letter-spacing: $tracking-normal;
+      color: var(--color-text-tertiary);
+    }
+  }
+</style>

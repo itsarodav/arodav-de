@@ -1,0 +1,134 @@
+@use '../tokens' as *;
+
+.page-article {
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: $space-4;
+  padding-top: $space-16;
+
+  @include respond-to(md) {
+    padding-top: $space-20;
+  }
+}
+
+.article-header {
+  margin-bottom: $space-8;
+
+  &__title {
+    font-size: $text-3xl;
+    font-weight: $font-semibold;
+    line-height: $line-tight;
+    letter-spacing: $tracking-tighter;
+    color: var(--color-text-primary);
+    margin-bottom: $space-3;
+  }
+
+  &__date {
+    font-size: $text-sm;
+    letter-spacing: $tracking-wide;
+    color: var(--color-text-tertiary);
+  }
+
+  &__back {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-2;
+    font-size: $text-sm;
+    letter-spacing: $tracking-wide;
+    color: var(--color-text-tertiary);
+    margin-bottom: $space-6;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: var(--color-link);
+    }
+  }
+}
+
+.article-content {
+  font-size: $text-base;
+  line-height: $line-relaxed;
+  letter-spacing: $tracking-normal;
+  color: var(--color-text-secondary);
+
+  h2 {
+    font-size: $text-2xl;
+    font-weight: $font-semibold;
+    letter-spacing: $tracking-tight;
+    color: var(--color-text-primary);
+    margin-top: $space-10;
+    margin-bottom: $space-4;
+    line-height: $line-snug;
+  }
+
+  h3 {
+    font-size: $text-xl;
+    font-weight: $font-semibold;
+    letter-spacing: $tracking-tight;
+    color: var(--color-text-primary);
+    margin-top: $space-8;
+    margin-bottom: $space-3;
+    line-height: $line-snug;
+  }
+
+  p {
+    margin-bottom: $space-4;
+  }
+
+  a {
+    color: var(--color-link);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: var(--color-link-hover);
+    }
+  }
+
+  ul, ol {
+    margin-bottom: $space-4;
+    padding-left: $space-6;
+  }
+
+  ul {
+    list-style: disc;
+  }
+
+  ol {
+    list-style: decimal;
+  }
+
+  li {
+    margin-bottom: $space-2;
+  }
+
+  code {
+    font-size: $text-sm;
+    background-color: var(--color-bg-secondary);
+    padding: $space-1 $space-2;
+    border-radius: 4px;
+  }
+
+  pre {
+    background-color: var(--color-bg-secondary);
+    padding: $space-4;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin-bottom: $space-4;
+
+    code {
+      background: none;
+      padding: 0;
+    }
+  }
+
+  blockquote {
+    border-left: 3px solid var(--color-accent);
+    padding-left: $space-4;
+    margin-bottom: $space-4;
+    color: var(--color-text-tertiary);
+    font-style: italic;
+  }
+}

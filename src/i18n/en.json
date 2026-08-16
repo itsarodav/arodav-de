@@ -1,0 +1,74 @@
+{
+  "site.title": "Andrea Robles Dávila -Design Engineer",
+  "site.description": "Portfolio and digital garden of Andrea Robles Dávila. Design Engineer building design systems, tools, and digital products.",
+
+  "nav.home": "Home",
+  "nav.writing": "Writing",
+  "nav.design": "Design",
+  "nav.menu": "Menu",
+  "nav.open_menu": "Open menu",
+  "nav.close_menu": "Close menu",
+  "nav.language": "ES",
+  "nav.language_label": "Switch to Spanish",
+  "nav.main": "Main navigation",
+
+  "hero.name": "Andrea Robles Dávila",
+  "hero.bio_1a": "I'm a Design Engineer. Currently at",
+  "hero.bio_1b": ", where I own the design system for &ldquo;Memoria Digital&rdquo;. Building my own things, every day. All under",
+  "hero.bio_1c": ".",
+  "hero.bio_2": "I work on the layer other developers build on top of. Naming, states, variants and edge cases are decided before anyone else has to think about them. Same person deciding it in design and shipping it in code, so what gets designed is what gets shipped.",
+
+  "section.work": "Work",
+  "section.experience": "Experience",
+  "section.writing": "Writing",
+
+  "work.mdds.name": "MDDS - Memoria Digital Design System",
+  "work.mdds.description": "Internal design system. Tokens, components, governance",
+  "work.riffims.name": "Riffims",
+  "work.riffims.description": "Mobile-first app for indie artists to manage music releases",
+  "work.linkims.name": "Linkims",
+  "work.linkims.description": "Multi-profile link hub with per-theme styling",
+  "work.prelude.name": "Prelude Icons",
+  "work.prelude.description": "Icons that ship straight from design to code",
+
+  "experience.odilo.company": "ODILO",
+  "experience.odilo.role_current": "Design Engineer",
+  "experience.odilo.period_current": "2026 – Present",
+  "experience.odilo.description_current": "The first one in the company. Working across UI development, design, and product direction.",
+  "experience.odilo.bullet_1": "24% of component usage now comes from developers who didn't build them",
+  "experience.odilo.bullet_2": "Replacing ad-hoc UI patterns with a single system, 26 screens and counting",
+  "experience.odilo.bullet_3": "Components ship with 6-language support and accessibility built in, so devs don't handle it per screen",
+  "experience.odilo.role_past": "Product Designer",
+  "experience.odilo.period_past": "2022 – 2026",
+  "experience.odilo.description_past": "Team of one. Worked as the first product designer on the team of this product vertical.",
+  "experience.odilo.bullet_past_1": "Defined the design system and icon library that became MDDS",
+  "experience.odilo.bullet_past_2": "Standardized how design reached development. Specs, naming, and component contracts",
+
+  "experience.pakatnamu.company": "Pakatnamú",
+  "experience.pakatnamu.role": "Web designer & Marketing Lead",
+  "experience.pakatnamu.period": "2021 – 2023",
+  "experience.pakatnamu.description": "Non-profit Project. Crowdfunding platform for arts and culture. Raised S/88,000 across campaigns.",
+
+  "experience.peruke.company": "Peruke",
+  "experience.peruke.role": "Designer & Marketing Assistant",
+  "experience.peruke.period": "2020 – 2021",
+  "experience.peruke.description": "Design and marketing for Peru's top-selling ukelele and other music instruments retailer.",
+
+  "experience.freelance.company": "Freelance",
+  "experience.freelance.role": "Web & Graphic Designer",
+  "experience.freelance.period": "2017 – 2020",
+  "experience.freelance.description": "10+ clients across industries. Web, brand, and visual identity.",
+
+  "writing.read_all": "Read all posts",
+
+  "footer.linkedin": "LinkedIn",
+  "footer.github": "GitHub",
+  "footer.email": "hi@arodav.com",
+  "footer.resume": "Resume",
+  "footer.crafted_prefix": "crafted with",
+  "footer.crafted_mid": "and",
+  "footer.crafted_suffix": "by arodav",
+  "footer.external_link": "Opens in new tab",
+
+  "theme.toggle": "Toggle theme"
+}

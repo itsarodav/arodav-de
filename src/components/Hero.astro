@@ -1,0 +1,98 @@
+---
+import Icon from './Icon.astro';
+import { useTranslations, type Lang } from '@/i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const logoSvg = await import('/src/icons/top-rounded-arodav.svg?raw');
+---
+
+<section class="hero">
+  <div class="hero__logo" aria-hidden="true">
+    <Fragment set:html={logoSvg.default} />
+  </div>
+  <h1 class="hero__name">{t('hero.name')}</h1>
+  <p class="hero__bio">
+    <Fragment set:html={t('hero.bio_1a')} />
+    {' '}
+    <a class="hero__link" href="https://www.odilo.us/" target="_blank" rel="noopener noreferrer">
+      ODILO
+      <Icon name="arrow-out" size={14} color="currentColor" role="decorative" />
+    </a>
+    <Fragment set:html={t('hero.bio_1b')} />
+    {' '}
+    <a class="hero__link" href="https://github.com/itsarodav" target="_blank" rel="noopener noreferrer">
+      arodav
+      <Icon name="arrow-out" size={14} color="currentColor" role="decorative" />
+    </a>
+    <Fragment set:html={t('hero.bio_1c')} />
+  </p>
+  <p class="hero__bio">{t('hero.bio_2')}</p>
+</section>
+
+<style lang="scss">
+  @use '../styles/tokens' as *;
+
+  .hero {
+    margin-bottom: $space-14;
+
+    @include respond-to(md) {
+      margin-bottom: $space-16;
+    }
+
+    &__logo {
+      margin-bottom: $space-6;
+
+      :global(svg) {
+        width: 48px;
+        height: 48px;
+      }
+    }
+
+    &__name {
+      font-size: $text-base;
+      font-weight: $font-semibold;
+      line-height: $line-snug;
+      letter-spacing: $tracking-normal;
+      color: var(--color-text-primary);
+      margin-bottom: $space-4;
+    }
+
+    &__bio {
+      font-size: $text-base;
+      font-weight: $font-medium;
+      line-height: $line-normal;
+      letter-spacing: $tracking-normal;
+      color: var(--color-text-secondary);
+      margin-bottom: $space-4;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+    }
+
+    &__link {
+      display: inline-flex;
+      align-items: center;
+      gap: $space-1;
+      color: var(--color-link);
+      text-decoration: none;
+      transition: color 0.25s cubic-bezier(0.25, 0.1, 0.25, 1);
+
+      :global(svg) {
+        display: inline-block;
+        flex-shrink: 0;
+      }
+
+      &:hover {
+        color: $color-dark-gray;
+      }
+    }
+  }
+</style>

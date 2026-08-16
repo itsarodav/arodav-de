@@ -1,0 +1,53 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import TopBar from '@/components/TopBar.astro';
+import MobileMenu from '@/components/MobileMenu.astro';
+import Breadcrumb from '@/components/Breadcrumb.astro';
+import WritingCard from '@/components/WritingCard.astro';
+import { getCollection } from 'astro:content';
+import { useTranslations, getArticlePath } from '@/i18n';
+
+const lang = 'es';
+const t = useTranslations(lang);
+
+const allPosts = await getCollection('writing', ({ data }) => {
+  return data.lang === lang && !data.draft;
+});
+
+const sortedPosts = allPosts.sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
+---
+
+<Layout title={`${t('section.writing')} -${t('site.title')}`} description={t('site.description')} lang={lang}>
+  <TopBar lang={lang} />
+  <MobileMenu lang={lang} currentPath="/es/writing" />
+
+  <main class="page-writing">
+    <Breadcrumb label={t('section.writing')} lang={lang} />
+
+    <div class="writing-list">
+      {sortedPosts.map((post) => {
+        const d = post.data.date;
+        const formattedDate = `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${String(d.getFullYear()).slice(-2)}`;
+        return (
+          <WritingCard
+            title={post.data.title}
+            date={formattedDate}
+            href={getArticlePath(post.id.replace(/^es\//, ''), lang)}
+          />
+        );
+      })}
+    </div>
+  </main>
+</Layout>
+
+<style is:global>
+  .writing-list:hover .writing-card {
+    opacity: 0.5;
+  }
+
+  .writing-list:hover .writing-card:hover {
+    opacity: 1;
+  }
+</style>

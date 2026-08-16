@@ -1,0 +1,100 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+import Icon from './Icon.astro';
+import { useTranslations, type Lang } from '@/i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<header class="topbar">
+  <nav class="topbar__nav" aria-label={t('nav.main')}>
+    <div class="topbar__actions">
+      <ThemeToggle ariaLabel={t('theme.toggle')} />
+      <button
+        class="topbar__menu-btn"
+        type="button"
+        aria-label={t('nav.open_menu')}
+        aria-expanded="false"
+        data-menu-toggle
+      >
+        <Icon name="menu" size={20} color="#303030" role="decorative" />
+      </button>
+    </div>
+  </nav>
+</header>
+
+<script>
+  const topbar = document.querySelector('.topbar');
+  if (topbar) {
+    const onScroll = () => {
+      if (window.scrollY > 10) {
+        topbar.classList.add('topbar--scrolled');
+      } else {
+        topbar.classList.remove('topbar--scrolled');
+      }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+</script>
+
+<style lang="scss">
+  @use '../styles/tokens' as *;
+
+  .topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: $space-2 $space-4;
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    transition: background 0.3s ease, backdrop-filter 0.3s ease;
+
+    &.topbar--scrolled {
+      background: rgba(255, 255, 255, 0.45);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    @include respond-to(md) {
+      padding: $space-2 $space-6;
+    }
+
+    &__nav {
+      display: flex;
+      justify-content: flex-end;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    &__actions {
+      display: flex;
+      align-items: center;
+      gap: $space-1;
+    }
+
+    &__menu-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      color: var(--color-icon-default);
+      transition: color 0.2s ease, background-color 0.25s cubic-bezier(0.25, 0.1, 0.25, 1);
+
+      &:hover {
+        color: var(--color-text-primary);
+        background-color: rgba($color-light-gray, 0.35);
+      }
+    }
+  }
+</style>

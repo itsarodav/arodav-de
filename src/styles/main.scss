@@ -1,0 +1,21 @@
+// Tokens (themes generates CSS custom properties)
+@use 'tokens';
+
+// Base
+@use 'base';
+
+// Layout
+@use 'layout';
+
+// Global body styles
+@use 'tokens/typography' as *;
+
+body {
+  font-family: $font-primary;
+  font-weight: $font-regular;
+  font-size: $text-base;
+  line-height: $line-normal;
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}

@@ -1,0 +1,49 @@
+---
+interface Props {
+  name: string;
+  size?: number;
+  color?: string;
+  role?: 'link' | 'button' | 'decorative';
+  ariaLabel?: string;
+  class?: string;
+}
+
+const {
+  name,
+  size = 24,
+  color,
+  role = 'decorative',
+  ariaLabel,
+  class: className = '',
+} = Astro.props;
+
+const icons = import.meta.glob<string>('/src/icons/*.svg', {
+  query: '?raw',
+  import: 'default',
+  eager: true,
+});
+
+const svgPath = `/src/icons/${name}.svg`;
+const svgContent = icons[svgPath] || '';
+
+// Replace width/height and inject class
+let processed = svgContent
+  .replace(/width="[^"]*"/, `width="${size}"`)
+  .replace(/height="[^"]*"/, `height="${size}"`)
+  .replace(/<svg/, `<svg class="icon icon--${name} ${className}"`);
+
+// Only replace fill colors when an explicit color is passed
+if (color) {
+  processed = processed.replace(/fill="(?!none|white|#fff|#FEFEFE)[^"]*"/g, `fill="${color}"`);
+}
+
+// Accessibility attributes
+if (role === 'decorative') {
+  processed = processed.replace(/<svg/, '<svg aria-hidden="true" focusable="false"');
+} else {
+  const label = ariaLabel || name;
+  processed = processed.replace(/<svg/, `<svg role="img" aria-label="${label}"`);
+}
+---
+
+<Fragment set:html={processed} />

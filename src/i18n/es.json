@@ -1,0 +1,74 @@
+{
+  "site.title": "Andrea Robles Dávila -Design Engineer",
+  "site.description": "Portafolio y jardín digital de Andrea Robles Dávila. Design Engineer construyendo sistemas de diseño, herramientas y productos digitales.",
+
+  "nav.home": "Inicio",
+  "nav.writing": "Escritos",
+  "nav.design": "Diseño",
+  "nav.menu": "Menú",
+  "nav.open_menu": "Abrir menú",
+  "nav.close_menu": "Cerrar menú",
+  "nav.language": "EN",
+  "nav.language_label": "Cambiar a inglés",
+  "nav.main": "Navegación principal",
+
+  "hero.name": "Andrea Robles Dávila",
+  "hero.bio_1a": "Soy Design Engineer. Actualmente en",
+  "hero.bio_1b": ", donde lidero el sistema de diseño de &ldquo;Memoria Digital&rdquo;. Construyendo mis propias cosas, cada día. Todo bajo",
+  "hero.bio_1c": ".",
+  "hero.bio_2": "Trabajo en la capa sobre la que otros desarrolladores construyen. Nombrado, estados, variantes y edge cases se deciden antes de que nadie más tenga que pensar en ellos. La misma persona decidiendo en diseño y llevándolo a código, así lo que se diseña es lo que se lanza.",
+
+  "section.work": "Trabajo",
+  "section.experience": "Experiencia",
+  "section.writing": "Escritos",
+
+  "work.mdds.name": "MDDS - Memoria Digital Design System",
+  "work.mdds.description": "Sistema de diseño interno. Tokens, componentes, gobernanza",
+  "work.riffims.name": "Riffims",
+  "work.riffims.description": "App mobile-first para artistas indie para gestionar lanzamientos musicales",
+  "work.linkims.name": "Linkims",
+  "work.linkims.description": "Hub de enlaces multi-perfil con temas personalizados",
+  "work.prelude.name": "Prelude Icons",
+  "work.prelude.description": "Iconos que van directo del diseño al código",
+
+  "experience.odilo.company": "ODILO",
+  "experience.odilo.role_current": "Design Engineer",
+  "experience.odilo.period_current": "2026 – Presente",
+  "experience.odilo.description_current": "El primero en la empresa. Trabajando en desarrollo UI, diseño y dirección de producto.",
+  "experience.odilo.bullet_1": "El 24% del uso de componentes viene de desarrolladores que no los construyeron",
+  "experience.odilo.bullet_2": "Reemplazando patrones UI ad-hoc con un sistema único, 26 pantallas y contando",
+  "experience.odilo.bullet_3": "Los componentes incluyen soporte para 6 idiomas y accesibilidad, así los devs no lo manejan por pantalla",
+  "experience.odilo.role_past": "Product Designer",
+  "experience.odilo.period_past": "2022 – 2026",
+  "experience.odilo.description_past": "Equipo de una persona. Trabajé como la primera product designer en el equipo de esta vertical de producto.",
+  "experience.odilo.bullet_past_1": "Definí el sistema de diseño y la librería de iconos que se convirtió en MDDS",
+  "experience.odilo.bullet_past_2": "Estandaricé cómo el diseño llegaba a desarrollo. Specs, nombrado y contratos de componentes",
+
+  "experience.pakatnamu.company": "Pakatnamú",
+  "experience.pakatnamu.role": "Web designer & Marketing Lead",
+  "experience.pakatnamu.period": "2021 – 2023",
+  "experience.pakatnamu.description": "Proyecto sin fines de lucro. Plataforma de crowdfunding para artes y cultura. Recaudó S/88,000 en campañas.",
+
+  "experience.peruke.company": "Peruke",
+  "experience.peruke.role": "Diseñadora & Asistente de Marketing",
+  "experience.peruke.period": "2020 – 2021",
+  "experience.peruke.description": "Diseño y marketing para el principal vendedor de ukeleles e instrumentos musicales de Perú.",
+
+  "experience.freelance.company": "Freelance",
+  "experience.freelance.role": "Web & Graphic Designer",
+  "experience.freelance.period": "2017 – 2020",
+  "experience.freelance.description": "10+ clientes en diversas industrias. Web, marca e identidad visual.",
+
+  "writing.read_all": "Leer todos los posts",
+
+  "footer.linkedin": "LinkedIn",
+  "footer.github": "GitHub",
+  "footer.email": "hi@arodav.com",
+  "footer.resume": "Currículum",
+  "footer.crafted_prefix": "creado con",
+  "footer.crafted_mid": "y",
+  "footer.crafted_suffix": "por arodav",
+  "footer.external_link": "Se abre en nueva pestaña",
+
+  "theme.toggle": "Cambiar tema"
+}
