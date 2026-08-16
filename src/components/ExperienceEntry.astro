@@ -27,7 +27,7 @@ const {
         <Icon
           name={variant === 'timeline-current' ? 'flower-point' : 'start-dot'}
           size={10}
-          color="#CECECE"
+          color="currentColor"
           role="decorative"
         />
       </div>
@@ -62,7 +62,7 @@ const {
     &--timeline-current,
     &--timeline-past {
       display: flex;
-      gap: $space-3;
+      gap: $space-5;
     }
 
     &--simple {
@@ -79,7 +79,7 @@ const {
       align-items: center;
       flex-shrink: 0;
       width: 10px;
-      padding-top: $space-1;
+      padding-top: $space-2;
     }
 
     &__marker {
@@ -87,13 +87,14 @@ const {
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
+      color: var(--color-border);
     }
 
     &__line {
       width: 1px;
       flex: 1;
-      border-left: 1px dashed $color-light-gray;
-      margin-top: $space-2;
+      border-left: 1px dashed var(--color-border);
+      margin-bottom: calc(-1 * $space-2);
     }
 
     &__content {
