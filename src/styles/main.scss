@@ -1,5 +1,7 @@
-// Tokens (themes generates CSS custom properties)
+// Tokens
 @use 'tokens';
+// Themes (loaded separately to avoid re-emission in component scoped styles)
+@use 'tokens/themes';
 
 // Base
 @use 'base';
@@ -18,4 +20,9 @@ body {
   color: var(--color-text-primary);
   background-color: var(--color-bg-primary);
   transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+::selection {
+  background-color: var(--color-selection);
+  color: var(--color-selection-text);
 }

@@ -25,18 +25,6 @@ const navLinks = [
 <div class="mobile-menu" data-mobile-menu aria-hidden="true">
   <div class="mobile-menu__backdrop" data-menu-close></div>
   <div class="mobile-menu__panel">
-    <div class="mobile-menu__header">
-      <button
-        class="mobile-menu__close"
-        type="button"
-        aria-label={t('nav.close_menu')}
-        data-menu-close
-      >
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
-          <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-        </svg>
-      </button>
-    </div>
     <nav class="mobile-menu__nav" aria-label={t('nav.main')}>
       <ul class="mobile-menu__list">
         {navLinks.map((link) => (
@@ -102,27 +90,7 @@ const navLinks = [
       transition: transform 0.3s ease;
       display: flex;
       flex-direction: column;
-      padding: $space-3 $space-4;
-    }
-
-    &__header {
-      display: flex;
-      justify-content: flex-end;
-    }
-
-    &__close {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      color: var(--color-icon-default);
-      transition: color 0.2s ease;
-
-      &:hover {
-        color: var(--color-text-primary);
-      }
+      padding: $space-8 $space-4;
     }
 
     &__nav {
@@ -130,8 +98,6 @@ const navLinks = [
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding-top: $space-8;
-      padding-bottom: $space-8;
     }
 
     &__list {
@@ -175,32 +141,40 @@ const navLinks = [
   }
 </style>
 
-<script>
-  document.addEventListener('astro:page-load', () => {
-    const menu = document.querySelector('[data-mobile-menu]') as HTMLElement;
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', function () {
+    var menu = document.querySelector('[data-mobile-menu]');
     if (!menu) return;
 
-    const openBtns = document.querySelectorAll('[data-menu-toggle]');
-    const closeBtns = menu.querySelectorAll('[data-menu-close]');
+    var toggleBtns = document.querySelectorAll('[data-menu-toggle]');
+    var closeBtns = menu.querySelectorAll('[data-menu-close]');
 
     function open() {
       menu.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
-      const firstLink = menu.querySelector('a, button') as HTMLElement;
-      firstLink?.focus();
+      toggleBtns.forEach(function (btn) { btn.setAttribute('aria-expanded', 'true'); });
+      var firstLink = menu.querySelector('a');
+      if (firstLink) firstLink.focus();
     }
 
     function close() {
       menu.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
-      const trigger = document.querySelector('[data-menu-toggle]') as HTMLElement;
-      trigger?.focus();
+      toggleBtns.forEach(function (btn) { btn.setAttribute('aria-expanded', 'false'); });
+      var trigger = document.querySelector('[data-menu-toggle]');
+      if (trigger) trigger.focus();
     }
 
-    openBtns.forEach((btn) => btn.addEventListener('click', open));
-    closeBtns.forEach((btn) => btn.addEventListener('click', close));
+    toggleBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var isOpen = menu.getAttribute('aria-hidden') === 'false';
+        if (isOpen) { close(); } else { open(); }
+      });
+    });
 
-    menu.addEventListener('keydown', (e: KeyboardEvent) => {
+    closeBtns.forEach(function (btn) { btn.addEventListener('click', close); });
+
+    menu.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') close();
     });
   });
