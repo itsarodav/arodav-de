@@ -23,7 +23,6 @@ const navLinks = [
 ---
 
 <div class="mobile-menu" data-mobile-menu aria-hidden="true">
-  <div class="mobile-menu__backdrop" data-menu-close></div>
   <div class="mobile-menu__panel">
     <nav class="mobile-menu__nav" aria-label={t('nav.main')}>
       <ul class="mobile-menu__list">
@@ -62,33 +61,25 @@ const navLinks = [
     &[aria-hidden='false'] {
       pointer-events: auto;
 
-      .mobile-menu__backdrop {
-        opacity: 1;
-      }
-
       .mobile-menu__panel {
-        transform: translateX(0);
+        opacity: 1;
+        transform: translateY(0);
       }
-    }
-
-    &__backdrop {
-      position: absolute;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.4);
-      opacity: 0;
-      transition: opacity 0.3s ease;
     }
 
     &__panel {
       position: absolute;
       inset: 0;
       background-color: var(--color-bg-primary);
-      transform: translateX(100%);
-      transition: transform 0.3s ease;
+      opacity: 0;
+      transform: translateY(-8px);
+      transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                  transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: calc($space-8 + 3rem) $space-4 $space-8;
+      padding-top: calc($space-8 + 3rem);
+      padding-bottom: $space-8;
     }
 
     &__nav {
@@ -98,6 +89,7 @@ const navLinks = [
       justify-content: space-between;
       width: 100%;
       max-width: 640px;
+      padding: 0 $space-4;
     }
 
     &__list {
@@ -147,7 +139,6 @@ const navLinks = [
     if (!menu) return;
 
     var toggleBtns = document.querySelectorAll('[data-menu-toggle]');
-    var closeBtns = menu.querySelectorAll('[data-menu-close]');
 
     function open() {
       menu.setAttribute('aria-hidden', 'false');
@@ -171,8 +162,6 @@ const navLinks = [
         if (isOpen) { close(); } else { open(); }
       });
     });
-
-    closeBtns.forEach(function (btn) { btn.addEventListener('click', close); });
 
     menu.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') close();
