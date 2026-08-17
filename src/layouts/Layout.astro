@@ -29,12 +29,7 @@ const { title, description, lang = defaultLang } = Astro.props;
     {/* Prevent theme flash */}
     <script is:inline>
       (function () {
-        const stored = localStorage.getItem('arodav-theme');
-        const theme =
-          stored ||
-          (window.matchMedia('(prefers-color-scheme: dark)').matches
-            ? 'dark'
-            : 'light');
+        var theme = localStorage.getItem('arodav-theme') || 'light';
         document.documentElement.setAttribute('data-theme', theme);
       })();
     </script>

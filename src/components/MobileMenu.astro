@@ -18,7 +18,7 @@ const writingPath = lang === 'es' ? '/es/writing' : '/writing';
 const navLinks = [
   { label: t('nav.home'), href: homePath },
   { label: t('nav.writing'), href: writingPath },
-  { label: t('nav.design'), href: '#' },
+  { label: t('nav.design'), href: 'https://design.arodav.com/', external: true },
 ];
 ---
 
@@ -31,6 +31,8 @@ const navLinks = [
             <a
               class="mobile-menu__link"
               href={link.href}
+              target={link.external ? '_blank' : undefined}
+              rel={link.external ? 'noopener noreferrer' : undefined}
               aria-current={currentPath === link.href ? 'page' : undefined}
             >
               {link.label}
