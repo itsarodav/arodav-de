@@ -2,6 +2,7 @@
 import Layout from './Layout.astro';
 import TopBar from '@/components/TopBar.astro';
 import MobileMenu from '@/components/MobileMenu.astro';
+import Aside from '@/components/Aside.astro';
 import Footer from '@/components/Footer.astro';
 import { type Lang, getWritingPath } from '@/i18n';
 
@@ -37,9 +38,12 @@ const currentPath = Astro.url.pathname;
         {formattedDate}
       </time>
     </header>
-    <article class="article-content">
-      <slot />
-    </article>
-    <Footer lang={lang} />
+    <div class="article-layout">
+      <Aside contentSelector=".article-content" />
+      <article class="article-content">
+        <slot />
+        <Footer lang={lang} />
+      </article>
+    </div>
   </main>
 </Layout>

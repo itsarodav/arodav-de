@@ -3,6 +3,7 @@ import Layout from '@/layouts/Layout.astro';
 import TopBar from '@/components/TopBar.astro';
 import MobileMenu from '@/components/MobileMenu.astro';
 import Breadcrumb from '@/components/Breadcrumb.astro';
+import Aside from '@/components/Aside.astro';
 import Footer from '@/components/Footer.astro';
 import { useTranslations } from '@/i18n';
 
@@ -15,9 +16,11 @@ const t = useTranslations(lang);
   <MobileMenu lang={lang} currentPath="/mdds" />
 
   <main class="page-case">
-    <Breadcrumb label="MDDS" lang={lang} tag="span" />
-
-    <div class="case-content">
+    <div class="case-layout">
+      <Aside contentSelector=".case-content">
+        <Breadcrumb label="MDDS" lang={lang} tag="span" />
+      </Aside>
+      <div class="case-content">
       <section class="case-hero">
         <div class="case-hero__image">
           <img
@@ -110,9 +113,9 @@ const t = useTranslations(lang);
         <h2 class="case-section__title">{t('case.mdds.s5.title')}</h2>
         <p class="case-section__text">{t('case.mdds.s5.p1')}</p>
       </section>
+      <Footer lang={lang} />
+      </div>
     </div>
-
-    <Footer lang={lang} />
   </main>
 </Layout>
 

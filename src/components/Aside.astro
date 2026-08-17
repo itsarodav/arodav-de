@@ -1,0 +1,171 @@
+---
+interface Props {
+  contentSelector: string;
+}
+
+const { contentSelector } = Astro.props;
+---
+
+<nav class="aside" aria-label="Table of contents" data-content-selector={contentSelector}>
+  <slot />
+  <ul class="aside__list"></ul>
+</nav>
+
+<script>
+  const aside = document.querySelector('.aside') as HTMLElement | null;
+  if (aside) {
+    const contentSelector = aside.dataset.contentSelector;
+    if (contentSelector) {
+      const contentArea = document.querySelector(contentSelector);
+      const list = aside.querySelector('.aside__list');
+
+      if (contentArea && list) {
+        const headings = contentArea.querySelectorAll('h2');
+
+        if (headings.length === 0) {
+          aside.style.display = 'none';
+        } else {
+          // Generate IDs for headings without one
+          headings.forEach((h2, index) => {
+            if (!h2.id) {
+              const slug = h2.textContent
+                ?.trim()
+                .toLowerCase()
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .replace(/[^a-z0-9\s-]/g, '')
+                .replace(/\s+/g, '-')
+                .replace(/-+/g, '-');
+              h2.id = slug || `section-${index}`;
+            }
+          });
+
+          // Build the link list
+          headings.forEach((h2) => {
+            const li = document.createElement('li');
+            li.className = 'aside__item';
+            const a = document.createElement('a');
+            a.className = 'aside__link';
+            a.href = `#${h2.id}`;
+            a.textContent = h2.textContent?.trim() || '';
+            li.appendChild(a);
+            list.appendChild(li);
+          });
+
+          // Track active heading based on scroll position
+          const links = list.querySelectorAll('.aside__link');
+          let currentActiveId: string | null = null;
+
+          function setActive(id: string | null) {
+            if (id === currentActiveId) return;
+            currentActiveId = id;
+
+            if (id) {
+              list!.classList.add('aside__list--has-active');
+            } else {
+              list!.classList.remove('aside__list--has-active');
+            }
+
+            links.forEach((link) => {
+              const href = link.getAttribute('href');
+              if (href === `#${id}`) {
+                link.classList.add('aside__link--active');
+              } else {
+                link.classList.remove('aside__link--active');
+              }
+            });
+          }
+
+          // IntersectionObserver for active state
+          const observer = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                  setActive(entry.target.id);
+                }
+              });
+            },
+            {
+              rootMargin: '-80px 0px -60% 0px',
+              threshold: 0,
+            }
+          );
+
+          headings.forEach((h2) => observer.observe(h2));
+
+          // Smooth scroll on click
+          links.forEach((link) => {
+            link.addEventListener('click', (e) => {
+              e.preventDefault();
+              const href = link.getAttribute('href');
+              if (!href) return;
+              const target = document.getElementById(href.slice(1));
+              if (target) {
+                const y = target.getBoundingClientRect().top + window.scrollY - 80;
+                window.scrollTo({ top: y, behavior: 'smooth' });
+              }
+            });
+          });
+        }
+      }
+    }
+  }
+</script>
+
+<style lang="scss">
+  @use '../styles/tokens' as *;
+
+  .aside {
+    display: none;
+
+    @include respond-to(lg) {
+      display: block;
+      position: sticky;
+      top: $space-20;
+      align-self: start;
+      padding-right: $space-6;
+    }
+
+    :global(.aside__list) {
+      display: flex;
+      flex-direction: column;
+      gap: $space-1;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    :global(.aside__link) {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      font-size: $text-xs;
+      font-weight: $font-regular;
+      letter-spacing: $tracking-wide;
+      line-height: $line-normal;
+      color: var(--color-text-tertiary);
+      padding: $space-1 0;
+      transition: color 0.2s ease, opacity 0.2s ease;
+      text-decoration: none;
+
+      &:hover {
+        color: var(--color-text-primary);
+      }
+    }
+
+    :global(.aside__list--has-active) :global(.aside__link) {
+      opacity: 0.45;
+    }
+
+    :global(.aside__list--has-active) :global(.aside__link--active) {
+      color: var(--color-text-primary);
+      font-weight: $font-medium;
+      opacity: 1;
+    }
+
+    :global(.aside__list--has-active) :global(.aside__link:hover) {
+      opacity: 1;
+    }
+  }
+</style>
