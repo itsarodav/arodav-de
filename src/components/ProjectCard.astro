@@ -48,9 +48,8 @@ const isExternal = external && href !== '#';
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 44px;
-      height: 44px;
-      border-radius: 10px;
+      padding: 4px;
+      border-radius: 8px;
 
       :global(svg) {
         width: 24px;
@@ -58,8 +57,7 @@ const isExternal = external && href !== '#';
       }
 
       @include respond-to(md) {
-        width: 56px;
-        height: 56px;
+        padding: $space-3;
         border-radius: 12px;
 
         :global(svg) {
