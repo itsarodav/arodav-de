@@ -20,15 +20,13 @@ const isExternal = external && href !== '#';
   {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
   aria-label={ariaLabel || `${name} -${description}`}
 >
-  <div class="project-card__icon">
-    <Icon name={icon} size={32} role="decorative" />
-  </div>
+  <Icon name={icon} size={32} role="decorative" />
   <div class="project-card__content">
     <span class="project-card__name">{name}</span>
     <span class="project-card__description">{description}</span>
   </div>
   <div class="project-card__arrow">
-    <Icon name="arrow-out" size={20} role="decorative" />
+    <Icon name={isExternal ? 'arrow-out' : 'arrow-right'} size={20} role="decorative" />
   </div>
 </a>
 
@@ -42,30 +40,6 @@ const isExternal = external && href !== '#';
     padding: $space-3 0;
     border-radius: 12px;
     transition: opacity 0.2s ease;
-
-    &__icon {
-      flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 4px;
-      border-radius: 8px;
-
-      :global(svg) {
-        width: 24px;
-        height: 24px;
-      }
-
-      @include respond-to(md) {
-        padding: $space-3;
-        border-radius: 12px;
-
-        :global(svg) {
-          width: 32px;
-          height: 32px;
-        }
-      }
-    }
 
     &__content {
       flex: 1;

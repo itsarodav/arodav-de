@@ -192,13 +192,6 @@ const logoSvg = await import('/src/icons/arodav-profilee.svg?raw');
       }, 2500);
     }
 
-    // --- Entrance ---
-    gsap.from(svg, {
-      y: 15,
-      opacity: 0,
-      duration: 1,
-      ease: 'elastic.out(1, 0.5)',
-    });
   }
 
   if (document.readyState === 'loading') {
