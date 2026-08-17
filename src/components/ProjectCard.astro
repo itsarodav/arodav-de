@@ -7,16 +7,17 @@ interface Props {
   description: string;
   href: string;
   ariaLabel?: string;
+  external?: boolean;
 }
 
-const { icon, name, description, href, ariaLabel } = Astro.props;
+const { icon, name, description, href, ariaLabel, external = true } = Astro.props;
+const isExternal = external && href !== '#';
 ---
 
 <a
   class="project-card"
   href={href}
-  target="_blank"
-  rel="noopener noreferrer"
+  {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
   aria-label={ariaLabel || `${name} -${description}`}
 >
   <div class="project-card__icon">
