@@ -11,27 +11,16 @@
     padding-top: $space-20;
   }
 
-  @include respond-to(lg) {
-    max-width: 868px;
-  }
-}
-
-.article-layout {
-  @include respond-to(lg) {
-    display: grid;
-    grid-template-columns: 180px 1fr;
-    gap: $space-12;
-  }
 }
 
 .article-header {
   margin-bottom: $space-8;
 
   &__title {
-    font-size: $text-3xl;
+    font-size: $text-xl;
     font-weight: $font-semibold;
-    line-height: $line-tight;
-    letter-spacing: $tracking-tighter;
+    line-height: $line-snug;
+    letter-spacing: $tracking-tight;
     color: var(--color-text-primary);
     margin-bottom: $space-3;
   }
@@ -65,7 +54,7 @@
   color: var(--color-text-secondary);
 
   h2 {
-    font-size: $text-2xl;
+    font-size: $text-lg;
     font-weight: $font-semibold;
     letter-spacing: $tracking-tight;
     color: var(--color-text-primary);

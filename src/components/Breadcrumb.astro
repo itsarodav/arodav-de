@@ -2,13 +2,19 @@
 import Icon from './Icon.astro';
 import { useTranslations, type Lang } from '@/i18n';
 
+interface BreadcrumbItem {
+  label: string;
+  href: string;
+}
+
 interface Props {
   label: string;
   lang: Lang;
   tag?: 'h1' | 'h2' | 'span';
+  parents?: BreadcrumbItem[];
 }
 
-const { label, lang, tag: Tag = 'h1' } = Astro.props;
+const { label, lang, tag: Tag = 'h1', parents = [] } = Astro.props;
 const t = useTranslations(lang);
 const homePath = lang === 'es' ? '/es' : '/';
 ---
@@ -17,6 +23,12 @@ const homePath = lang === 'es' ? '/es' : '/';
   <a class="breadcrumb__home" href={homePath} aria-label={t('nav.home')}>
     <Icon name="home" size={14} color="currentColor" role="decorative" />
   </a>
+  {parents.map((parent) => (
+    <>
+      <span class="breadcrumb__separator" aria-hidden="true">/</span>
+      <a class="breadcrumb__parent" href={parent.href}>{parent.label}</a>
+    </>
+  ))}
   <span class="breadcrumb__separator" aria-hidden="true">/</span>
   <Tag class="breadcrumb__current">{label}</Tag>
 </nav>
@@ -25,10 +37,14 @@ const homePath = lang === 'es' ? '/es' : '/';
   @use '../styles/tokens' as *;
 
   .breadcrumb {
-    display: inline-flex;
+    display: none;
     align-items: center;
     gap: $space-2;
     margin-bottom: $space-8;
+
+    @include respond-to(lg) {
+      display: inline-flex;
+    }
 
     &__home {
       display: inline-flex;
@@ -45,6 +61,19 @@ const homePath = lang === 'es' ? '/es' : '/';
       font-size: $text-sm;
       color: var(--color-text-tertiary);
       user-select: none;
+    }
+
+    &__parent {
+      font-size: $text-base;
+      font-weight: $font-medium;
+      letter-spacing: $tracking-normal;
+      color: var(--color-text-tertiary);
+      text-decoration: none;
+      transition: color 0.2s ease;
+
+      &:hover {
+        color: var(--color-text-primary);
+      }
     }
 
     &__current {

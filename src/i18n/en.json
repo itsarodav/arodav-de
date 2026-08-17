@@ -3,6 +3,7 @@
   "site.description": "Portfolio and digital garden of Andrea Robles Dávila. Design Engineer building design systems, tools, and digital products.",
 
   "nav.home": "Home",
+  "nav.back_home": "Back to home",
   "nav.writing": "Writing",
   "nav.design": "Design version",
   "nav.menu": "Menu",

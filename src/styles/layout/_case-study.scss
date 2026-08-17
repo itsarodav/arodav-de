@@ -11,17 +11,6 @@
     padding-top: $space-20;
   }
 
-  @include respond-to(lg) {
-    max-width: 868px;
-  }
-}
-
-.case-layout {
-  @include respond-to(lg) {
-    display: grid;
-    grid-template-columns: 180px 1fr;
-    gap: $space-12;
-  }
 }
 
 // Hero

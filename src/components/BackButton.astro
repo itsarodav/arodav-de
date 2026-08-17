@@ -1,0 +1,42 @@
+---
+import Icon from './Icon.astro';
+import { useTranslations, type Lang } from '@/i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const homePath = lang === 'es' ? '/es' : '/';
+---
+
+<a class="back-btn" href={homePath}>
+  <Icon name="arrow-left" size={14} color="currentColor" role="decorative" />
+  <span>{t('nav.back_home')}</span>
+</a>
+
+<style lang="scss">
+  @use '../styles/tokens' as *;
+
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-2;
+    font-size: $text-sm;
+    font-weight: $font-medium;
+    letter-spacing: $tracking-wide;
+    color: var(--color-text-tertiary);
+    text-decoration: none;
+    margin-bottom: $space-8;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: var(--color-text-primary);
+    }
+
+    @include respond-to(lg) {
+      display: none;
+    }
+  }
+</style>

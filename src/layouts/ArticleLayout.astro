@@ -3,8 +3,10 @@ import Layout from './Layout.astro';
 import TopBar from '@/components/TopBar.astro';
 import MobileMenu from '@/components/MobileMenu.astro';
 import Aside from '@/components/Aside.astro';
+import Breadcrumb from '@/components/Breadcrumb.astro';
+import BackButton from '@/components/BackButton.astro';
 import Footer from '@/components/Footer.astro';
-import { type Lang, getWritingPath } from '@/i18n';
+import { type Lang, getWritingPath, useTranslations } from '@/i18n';
 
 interface Props {
   title: string;
@@ -21,8 +23,9 @@ const formattedDate = date.toLocaleDateString(lang === 'es' ? 'es-ES' : 'en-US',
   day: 'numeric',
 });
 
-const backLabel = lang === 'es' ? '← Volver a escritos' : '← Back to writing';
+const t = useTranslations(lang);
 const writingPath = getWritingPath(lang);
+const writingLabel = lang === 'es' ? 'Escritos' : 'Writing';
 const currentPath = Astro.url.pathname;
 ---
 
@@ -31,19 +34,18 @@ const currentPath = Astro.url.pathname;
   <MobileMenu lang={lang} currentPath={currentPath} />
 
   <main class="page-article">
-    <a class="article-header__back" href={writingPath}>{backLabel}</a>
+    <Breadcrumb label={title} lang={lang} tag="span" parents={[{ label: writingLabel, href: writingPath }]} />
+    <BackButton lang={lang} />
     <header class="article-header">
       <h1 class="article-header__title">{title}</h1>
       <time class="article-header__date" datetime={date.toISOString()}>
         {formattedDate}
       </time>
     </header>
-    <div class="article-layout">
-      <Aside contentSelector=".article-content" />
-      <article class="article-content">
-        <slot />
-        <Footer lang={lang} />
-      </article>
-    </div>
+    <Aside contentSelector=".article-content" lang={lang} />
+    <article class="article-content">
+      <slot />
+      <Footer lang={lang} />
+    </article>
   </main>
 </Layout>
