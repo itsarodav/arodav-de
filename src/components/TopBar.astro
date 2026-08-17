@@ -101,9 +101,11 @@ const t = useTranslations(lang);
       color: var(--color-icon-default);
       transition: color 0.2s ease, background-color 0.25s cubic-bezier(0.25, 0.1, 0.25, 1);
 
-      &:hover {
-        color: var(--color-text-primary);
-        background-color: rgba($color-light-gray, 0.35);
+      @media (hover: hover) {
+        &:hover {
+          color: var(--color-text-primary);
+          background-color: rgba($color-light-gray, 0.35);
+        }
       }
     }
 

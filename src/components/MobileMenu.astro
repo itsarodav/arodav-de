@@ -1,4 +1,5 @@
 ---
+import Icon from './Icon.astro';
 import { useTranslations, getAlternatePath, type Lang } from '@/i18n';
 
 interface Props {
@@ -36,6 +37,7 @@ const navLinks = [
               aria-current={currentPath === link.href ? 'page' : undefined}
             >
               {link.label}
+              {link.external && <Icon name="arrow-out" size={22} color="currentColor" role="decorative" />}
             </a>
           </li>
         ))}
@@ -101,6 +103,9 @@ const navLinks = [
     }
 
     &__link {
+      display: inline-flex;
+      align-items: center;
+      gap: $space-2;
       font-size: $text-2xl;
       font-weight: $font-medium;
       letter-spacing: $tracking-tighter;
@@ -167,6 +172,10 @@ const navLinks = [
 
     menu.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') close();
+    });
+
+    menu.addEventListener('click', function (e) {
+      if (!e.target.closest('a, button')) close();
     });
   });
 </script>
