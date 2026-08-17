@@ -9,7 +9,7 @@ interface Props {
 const { lang } = Astro.props;
 const t = useTranslations(lang);
 
-const logoSvg = await import('/src/icons/top-rounded-arodav.svg?raw');
+const logoSvg = await import('/src/icons/arodav-profilee.svg?raw');
 ---
 
 <section class="hero">
@@ -91,8 +91,119 @@ const logoSvg = await import('/src/icons/top-rounded-arodav.svg?raw');
       }
 
       &:hover {
-        color: $color-dark-gray;
+        color: var(--color-text-primary);
       }
     }
   }
+
 </style>
+
+<script>
+  import { gsap } from 'gsap';
+
+  function initLogoAnimation() {
+    const logo = document.querySelector('.hero__logo');
+    if (!logo) return;
+
+    const svg = logo.querySelector('svg');
+    if (!svg) return;
+
+    const isotipo = svg.querySelector('.isotipo');
+    const pupilLeft = svg.querySelector('.pupil-left');
+    const pupilRight = svg.querySelector('.pupil-right');
+
+    if (!isotipo) return;
+
+    // --- Default pupil position (less white space, matching favicon) ---
+    if (pupilLeft && pupilRight) {
+      const defaultX = 0;
+      const defaultY = 0;
+      gsap.set(pupilRight, { x: defaultX, y: defaultY, scale: 1.22, svgOrigin: '36 27' });
+      gsap.set(pupilLeft, { x: defaultX, y: defaultY, scale: 1.22, svgOrigin: '22.5 30' });
+
+      const eyes = [
+        { el: pupilRight, radius: 1.2 },
+        { el: pupilLeft, radius: 1.2 },
+      ];
+
+      const isMobile = window.matchMedia('(pointer: coarse)').matches;
+
+      if (isMobile) {
+        // Mobile: smooth up and back
+        const tl = gsap.timeline({ repeat: -1, repeatDelay: 2.5 });
+        eyes.forEach(({ el, radius }) => {
+          tl.to(el, {
+            x: defaultX,
+            y: defaultY - radius * 0.6,
+            duration: 0.6,
+            ease: 'power2.inOut',
+          }, 0);
+        });
+        eyes.forEach(({ el }) => {
+          tl.to(el, {
+            x: defaultX,
+            y: defaultY,
+            duration: 0.6,
+            ease: 'power2.inOut',
+          }, 0.8);
+        });
+      } else {
+        // Desktop: follow cursor
+        document.addEventListener('mousemove', (e) => {
+          const rect = svg.getBoundingClientRect();
+          const svgCenterX = rect.left + rect.width / 2;
+          const svgCenterY = rect.top + rect.height / 2;
+
+          const dx = e.clientX - svgCenterX;
+          const dy = e.clientY - svgCenterY;
+          const angle = Math.atan2(dy, dx);
+
+          eyes.forEach(({ el, radius }) => {
+            gsap.to(el, {
+              x: defaultX + Math.cos(angle) * radius,
+              y: defaultY + Math.sin(angle) * radius,
+              duration: 0.3,
+              ease: 'power2.out',
+            });
+          });
+        });
+      }
+    }
+
+    // --- Blink every 4 seconds ---
+    if (pupilLeft && pupilRight) {
+      function blink() {
+        gsap.timeline()
+          .to([pupilLeft, pupilRight], {
+            scaleY: 0.05,
+            duration: 0.07,
+            ease: 'power2.in',
+          })
+          .to([pupilLeft, pupilRight], {
+            scaleY: 1,
+            duration: 0.1,
+            ease: 'power2.out',
+          });
+      }
+
+      setTimeout(() => {
+        blink();
+        setInterval(blink, 3000);
+      }, 2500);
+    }
+
+    // --- Entrance ---
+    gsap.from(svg, {
+      y: 15,
+      opacity: 0,
+      duration: 1,
+      ease: 'elastic.out(1, 0.5)',
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initLogoAnimation);
+  } else {
+    initLogoAnimation();
+  }
+</script>

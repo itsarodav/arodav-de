@@ -13,7 +13,7 @@
   --color-link-hover: #0441b8;
   --color-accent: #{$color-accent};
   --color-icon-default: #303030;
-  --color-selection: #{$color-primary};
+  --color-selection: #{$color-accent};
   --color-selection-text: #{$color-white};
 }
 
@@ -29,6 +29,6 @@
   --color-link-hover: #6AA3FF;
   --color-accent: #2DD4A8;
   --color-icon-default: #{$color-light-gray};
-  --color-selection: #4A8EFF;
-  --color-selection-text: #{$color-white};
+  --color-selection: #2DD4A8;
+  --color-selection-text: #{$color-black};
 }
