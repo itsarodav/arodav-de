@@ -61,7 +61,7 @@ const t = useTranslations(lang);
     left: 0;
     right: 0;
     z-index: 250;
-    padding: $space-2 $space-4;
+    padding: $space-2 0;
     background: transparent;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
@@ -73,15 +73,16 @@ const t = useTranslations(lang);
       -webkit-backdrop-filter: blur(12px);
     }
 
-    @include respond-to(md) {
-      padding: $space-2 $space-6;
-    }
-
     &__nav {
       display: flex;
       justify-content: flex-end;
-      max-width: 640px;
+      max-width: 600px;
       margin: 0 auto;
+      padding: 0 $space-6;
+
+      @include respond-to(md) {
+        padding: 0 $space-4;
+      }
     }
 
     &__actions {

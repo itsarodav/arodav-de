@@ -2,6 +2,7 @@
 import Layout from '@/layouts/Layout.astro';
 import TopBar from '@/components/TopBar.astro';
 import MobileMenu from '@/components/MobileMenu.astro';
+import BackButton from '@/components/BackButton.astro';
 import Breadcrumb from '@/components/Breadcrumb.astro';
 import WritingCard from '@/components/WritingCard.astro';
 import { getCollection } from 'astro:content';
@@ -24,6 +25,7 @@ const sortedPosts = allPosts.sort(
   <MobileMenu lang={lang} currentPath="/writing" />
 
   <main class="page-writing">
+    <BackButton lang={lang} />
     <Breadcrumb label={t('section.writing')} lang={lang} />
 
     <div class="writing-list">
