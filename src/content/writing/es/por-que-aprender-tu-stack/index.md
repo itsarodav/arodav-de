@@ -34,6 +34,9 @@ El desarrollador que entiende sus herramientas no solo construye features. Const
 
 Elige la herramienta que más usas y lee su documentación. No la guía de inicio rápido -la sección de conceptos. La parte que explica el modelo mental detrás del API.
 
-Luego construye algo pequeño que ponga a prueba ese modelo mental. Rómpelo a propósito. Observa qué pasa.
+Luego construye algo pequeño que ponga a prueba ese modelo mental. Rómpelo a propósito. Observa qué pasa. Si algo te interesa, de todo lo que vas aprendiendo, te recomendaría tomar notas. Escribir es una buena forma de aprender también. En mi caso, utilizo Obsidian.
 
-Así es como dejas de ser un usuario de tus herramientas y empiezas a ser un practicante.
+![Obsidian como herramienta de aprendizaje](./obsdn-img.jpg)
+*Algunos temas de mis notas*
+
+Así es como dejas de ser un preso de tus herramientas y empiezas a ser alguien que construye con libertad. Aún no sé todo lo que quiero saber, pero cada día doy un paso adelante. Te animo a aprender un poquito más, cada día.

@@ -130,6 +130,22 @@
     }
   }
 
+  img {
+    display: block;
+    max-width: 40%;
+    height: auto;
+    margin: $space-8 auto $space-2;
+    border-radius: 8px;
+  }
+
+  img + em {
+    display: block;
+    text-align: center;
+    font-size: $text-xs;
+    color: var(--color-text-tertiary);
+    margin-bottom: $space-8;
+  }
+
   blockquote {
     border-left: 3px solid var(--color-accent);
     padding-left: $space-4;

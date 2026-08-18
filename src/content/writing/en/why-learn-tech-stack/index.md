@@ -34,6 +34,9 @@ The developer who understands their tools doesn't just build features. They buil
 
 Pick the tool you use most and read its documentation. Not the getting-started guide -the concepts section. The part that explains the mental model behind the API.
 
-Then build something small that tests that mental model. Break it on purpose. See what happens.
+Then build something small that tests that mental model. Break it on purpose. See what happens. If something catches your interest along the way, I'd recommend taking notes. Writing is a good way to learn too. In my case, I use Obsidian.
 
-That's how you stop being a user of your tools and start being a practitioner.
+![Obsidian as a learning tool](./obsdn-img.jpg)
+*Some topics from my notes*
+
+That's how you stop being a prisoner of your tools and start being someone who builds with freedom. I still don't know everything I want to know, but every day I take a step forward. I encourage you to learn a little more, every day.
