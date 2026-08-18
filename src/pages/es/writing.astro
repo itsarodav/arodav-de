@@ -43,11 +43,13 @@ const sortedPosts = allPosts.sort(
 </Layout>
 
 <style is:global>
-  .writing-list:hover .writing-card {
-    opacity: 0.5;
-  }
+  @media (hover: hover) {
+    .writing-list:hover .writing-card {
+      opacity: 0.5;
+    }
 
-  .writing-list:hover .writing-card:hover {
-    opacity: 1;
+    .writing-list:hover .writing-card:hover {
+      opacity: 1;
+    }
   }
 </style>

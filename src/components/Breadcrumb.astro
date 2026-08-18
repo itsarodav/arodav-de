@@ -52,8 +52,10 @@ const homePath = lang === 'es' ? '/es' : '/';
       color: var(--color-text-tertiary);
       transition: color 0.2s ease;
 
-      &:hover {
-        color: var(--color-text-primary);
+      @media (hover: hover) {
+        &:hover {
+          color: var(--color-text-primary);
+        }
       }
     }
 
@@ -71,8 +73,10 @@ const homePath = lang === 'es' ? '/es' : '/';
       text-decoration: none;
       transition: color 0.2s ease;
 
-      &:hover {
-        color: var(--color-text-primary);
+      @media (hover: hover) {
+        &:hover {
+          color: var(--color-text-primary);
+        }
       }
     }
 

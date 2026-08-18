@@ -125,12 +125,14 @@ const articles = [
     display: flex;
     flex-direction: column;
 
-    &:hover :global(.project-card) {
-      opacity: 0.5;
-    }
+    @media (hover: hover) {
+      &:hover :global(.project-card) {
+        opacity: 0.5;
+      }
 
-    &:hover :global(.project-card:hover) {
-      opacity: 1;
+      &:hover :global(.project-card:hover) {
+        opacity: 1;
+      }
     }
   }
 
@@ -154,14 +156,16 @@ const articles = [
   }
 
   .writing-section {
-    &:hover :global(.writing-card),
-    &:hover .read-all {
-      opacity: 0.5;
-    }
+    @media (hover: hover) {
+      &:hover :global(.writing-card),
+      &:hover .read-all {
+        opacity: 0.5;
+      }
 
-    &:hover :global(.writing-card:hover),
-    &:hover .read-all:hover {
-      opacity: 1;
+      &:hover :global(.writing-card:hover),
+      &:hover .read-all:hover {
+        opacity: 1;
+      }
     }
   }
 

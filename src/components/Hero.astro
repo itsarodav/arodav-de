@@ -90,8 +90,10 @@ const logoSvg = await import('/src/icons/arodav-profilee.svg?raw');
         flex-shrink: 0;
       }
 
-      &:hover {
-        color: var(--color-text-primary);
+      @media (hover: hover) {
+        &:hover {
+          color: var(--color-text-primary);
+        }
       }
     }
   }

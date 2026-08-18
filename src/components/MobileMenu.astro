@@ -112,9 +112,14 @@ const navLinks = [
       color: var(--color-text-primary);
       transition: color 0.2s ease;
 
-      &:hover,
       &[aria-current='page'] {
         color: var(--color-link);
+      }
+
+      @media (hover: hover) {
+        &:hover {
+          color: var(--color-link);
+        }
       }
     }
 
@@ -132,9 +137,11 @@ const navLinks = [
       color: var(--color-text-secondary);
       transition: border-color 0.2s ease, color 0.2s ease;
 
-      &:hover {
-        border-color: var(--color-text-primary);
-        color: var(--color-text-primary);
+      @media (hover: hover) {
+        &:hover {
+          border-color: var(--color-text-primary);
+          color: var(--color-text-primary);
+        }
       }
     }
   }

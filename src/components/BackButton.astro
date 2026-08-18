@@ -31,8 +31,10 @@ const homePath = lang === 'es' ? '/es' : '/';
     margin-bottom: $space-8;
     transition: color 0.2s ease;
 
-    &:hover {
-      color: var(--color-text-primary);
+    @media (hover: hover) {
+      &:hover {
+        color: var(--color-text-primary);
+      }
     }
 
     @include respond-to(lg) {
