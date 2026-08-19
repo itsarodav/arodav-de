@@ -71,6 +71,18 @@
   "footer.crafted_suffix": "por arodav",
   "footer.external_link": "Se abre en nueva pestaña",
 
+  "nav.about": "Sobre mí",
+
+  "about.meta.title": "Sobre mí - Andrea Robles Dávila",
+  "about.meta.description": "Notas sobre cómo llegué hasta aquí. Design Engineer construyendo sistemas de diseño, herramientas y productos digitales.",
+  "about.title": "Notas sobre cómo llegué hasta aquí",
+  "about.p1": "Todo empezó con la música. Antes de saber qué quería hacer, estaba obsesionada con el ritmo, las capas y los pequeños detalles, y esa curiosidad me llevó al diseño: logos para bandas, portadas, identidades para proyectos creativos. Siempre fui una niña de ordenador también, así que entender cómo se construyen las cosas nunca quedó lejos. El diseño no es solo lo que hago en el trabajo, es algo que me importa profundamente: cómo la gente usa las herramientas a su alrededor, cómo la tecnología se integra en la vida diaria, qué hace que una experiencia se sienta fluida, accesible y consistente. Ese es el hilo que conecta todo lo que he construido.",
+  "about.p2": "Hoy trabajo como Design Engineer, tras un camino por el diseño de producto, en la intersección de ambos. La música corre en paralelo como Marces, un proyecto que tengo ganas de retomar como se merece. Fuera del trabajo estoy metida en ergonomía y optimización de setups (diagnosticaré tu escritorio sin que me lo pidas), reviews de dispositivos y apps donde la tecnología se cruza con la música, y branding por diversión, a veces inventando proyectos solo para darles una identidad y darles vida en código. Comparto esa exploración a través de lemonims, mi laboratorio personal y pequeño sello creativo.",
+  "about.github.title": "En GitHub",
+  "about.github.p1": "Donde las ideas se convierten en código funcional, desde el primer commit hasta la última iteración. Algo está pulido, algo es simplemente yo persiguiendo una pregunta hasta encontrar una respuesta. Ambas versiones merecen mostrarse.",
+  "about.polaroid.photo1_alt": "Andrea Robles Dávila",
+  "about.polaroid.photo2_alt": "Proyecto musical Marces",
+
   "theme.toggle": "Cambiar tema",
 
   "case.mdds.back": "Volver al trabajo",

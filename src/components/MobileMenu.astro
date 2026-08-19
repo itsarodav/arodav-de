@@ -14,10 +14,12 @@ const alternateLang = lang === 'en' ? 'es' : 'en';
 const alternatePath = getAlternatePath(currentPath, alternateLang as any);
 
 const homePath = lang === 'es' ? '/es' : '/';
+const aboutPath = lang === 'es' ? '/es/about' : '/about';
 const writingPath = lang === 'es' ? '/es/writing' : '/writing';
 
 const navLinks = [
   { label: t('nav.home'), href: homePath },
+  { label: t('nav.about'), href: aboutPath },
   { label: t('nav.writing'), href: writingPath },
   { label: t('nav.design'), href: 'https://design.arodav.com/', external: true },
 ];

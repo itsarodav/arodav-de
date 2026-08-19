@@ -71,6 +71,18 @@
   "footer.crafted_suffix": "by arodav",
   "footer.external_link": "Opens in new tab",
 
+  "nav.about": "About",
+
+  "about.meta.title": "About - Andrea Robles Dávila",
+  "about.meta.description": "Notes on how I got here. Design Engineer building design systems, tools, and digital products.",
+  "about.title": "Notes on how I got here",
+  "about.p1": "It all started with music. Before I knew what I wanted to do, I was obsessed with rhythm, layers, and tiny details, and that curiosity pulled me toward design: logos for bands, cover art, identities for creative projects. I've always been a computer kid too, so understanding how things are built was never far behind. Design isn't just what I do for work, it's something I care about deeply: how people use the tools around them, how technology integrates into daily life, what makes an experience feel smooth, accessible, and consistent. That's the thread connecting everything I've built.",
+  "about.p2": "Today I work as a Design Engineer, after a path through product design, sitting at the intersection of both. Music runs in parallel as Marces, a project I'm looking forward to picking back up properly. Outside of work I'm deep into ergonomics and setup optimization (I will diagnose your desk uninvited), device and app reviews where tech meets music, and branding for fun, sometimes inventing projects just to give them an identity and bring them to life in code. I share that exploration through lemonims, my personal lab and small creative label.",
+  "about.github.title": "On GitHub",
+  "about.github.p1": "Where ideas turn into working code, from first commit to final iteration. Some of it is polished, some of it is just me chasing a question until I got an answer. Both versions are worth showing.",
+  "about.polaroid.photo1_alt": "Andrea Robles Dávila",
+  "about.polaroid.photo2_alt": "Marces music project",
+
   "theme.toggle": "Toggle theme",
 
   "case.mdds.back": "Back to work",

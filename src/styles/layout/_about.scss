@@ -1,0 +1,220 @@
+@use '../tokens' as *;
+
+.page-about {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: $space-6;
+  padding-top: $space-16;
+
+  @include respond-to(md) {
+    padding: $space-4;
+    padding-top: $space-20;
+  }
+}
+
+.about-title {
+  font-size: $text-base;
+  font-weight: $font-semibold;
+  line-height: $line-snug;
+  letter-spacing: $tracking-tight;
+  color: var(--color-text-primary);
+
+  @include respond-to(md) {
+    font-size: $text-lg;
+  }
+}
+
+.about-text {
+  font-size: $text-base;
+  font-weight: $font-medium;
+  line-height: $line-normal;
+  letter-spacing: $tracking-normal;
+  color: var(--color-text-secondary);
+}
+
+.about-section {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+  margin-top: $space-20;
+
+  &:first-of-type {
+    margin-top: 0;
+  }
+}
+
+// Polaroid collage
+.about-polaroids {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $space-4;
+  margin-top: $space-20;
+
+  @include respond-to(md) {
+    padding: $space-8;
+  }
+}
+
+.about-polaroids__inner {
+  position: relative;
+  height: 296px;
+  width: 100%;
+  max-width: 288px;
+
+  @include respond-to(md) {
+    height: 340px;
+    max-width: 320px;
+  }
+}
+
+.about-polaroid {
+  position: absolute;
+  border-radius: 2px;
+  padding: 8px;
+  padding-bottom: 40px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  background-color: white;
+
+  img {
+    width: 100%;
+    height: 100%;
+    border-radius: 2px;
+    object-fit: cover;
+  }
+
+  @media (hover: hover) {
+    transition: transform 0.3s ease-out;
+
+    &:hover {
+      transform: scale(1.08);
+    }
+  }
+
+  &--left {
+    right: 136px;
+    bottom: 104px;
+    height: 192px;
+    width: 160px;
+    transform: rotate(-6deg);
+
+    @include respond-to(md) {
+      right: 112px;
+      bottom: 96px;
+      height: 256px;
+      width: 224px;
+    }
+
+    @media (hover: hover) {
+      &:hover {
+        transform: rotate(-6deg) scale(1.08);
+      }
+    }
+  }
+
+  &--right {
+    left: 128px;
+    top: 96px;
+    z-index: 10;
+    height: 192px;
+    width: 160px;
+    transform: rotate(4deg);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+
+    @include respond-to(md) {
+      left: 120px;
+      top: 96px;
+      height: 256px;
+      width: 224px;
+    }
+
+    @media (hover: hover) {
+      &:hover {
+        transform: rotate(4deg) scale(1.08);
+      }
+    }
+  }
+}
+
+.about-sticker {
+  position: absolute;
+  z-index: 20;
+  height: auto;
+  filter: drop-shadow(0 4px 3px rgba(0, 0, 0, 0.07)) drop-shadow(0 2px 2px rgba(0, 0, 0, 0.06));
+
+  @media (hover: hover) {
+    transition: transform 0.3s ease-out;
+
+    &:hover {
+      transform: scale(1.08);
+    }
+  }
+
+  &--instax {
+    top: -12px;
+    right: 72px;
+    width: 80px;
+    transform: rotate(12deg);
+
+    @include respond-to(md) {
+      top: -64px;
+      right: 16px;
+      width: 112px;
+    }
+
+    @media (hover: hover) {
+      &:hover {
+        transform: rotate(12deg) scale(1.08);
+      }
+    }
+  }
+
+  &--mpk {
+    bottom: 64px;
+    left: 4px;
+    width: 184px;
+    transform: rotate(-8deg);
+
+    @include respond-to(md) {
+      bottom: -28px;
+      left: -32px;
+      width: 240px;
+    }
+
+    @media (hover: hover) {
+      &:hover {
+        transform: rotate(-8deg) scale(1.08);
+      }
+    }
+  }
+
+  &--xbox {
+    bottom: 184px;
+    right: -32px;
+    width: 80px;
+    transform: rotate(-10deg);
+
+    @include respond-to(md) {
+      top: 48px;
+      bottom: auto;
+      right: -88px;
+      width: 112px;
+    }
+
+    @media (hover: hover) {
+      &:hover {
+        transform: rotate(-10deg) scale(1.08);
+      }
+    }
+  }
+}
+
+[data-theme='dark'] .about-polaroid {
+  background-color: #e4e4e7;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.3);
+
+  &--right {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.4);
+  }
+}

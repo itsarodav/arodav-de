@@ -1,0 +1,104 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import TopBar from '@/components/TopBar.astro';
+import MobileMenu from '@/components/MobileMenu.astro';
+import Breadcrumb from '@/components/Breadcrumb.astro';
+import BackButton from '@/components/BackButton.astro';
+import Footer from '@/components/Footer.astro';
+import GitHubGraph from '@/components/GitHubGraph.astro';
+import { useTranslations } from '@/i18n';
+
+const lang = 'es';
+const t = useTranslations(lang);
+---
+
+<Layout title={t('about.meta.title')} description={t('about.meta.description')} lang={lang}>
+  <TopBar lang={lang} />
+  <MobileMenu lang={lang} currentPath="/es/about" />
+
+  <main class="page-about">
+    <Breadcrumb label={t('nav.about')} lang={lang} tag="h1" />
+    <BackButton lang={lang} />
+
+    <section class="about-section">
+      <h2 class="about-title">{t('about.title')}</h2>
+      <p class="about-text">{t('about.p1')}</p>
+      <p class="about-text">{t('about.p2')}</p>
+    </section>
+
+    <div class="about-polaroids">
+      <div class="about-polaroids__inner">
+        <div class="about-polaroid about-polaroid--left">
+          <img
+            src="/assets/arodav-dos.webp"
+            alt={t('about.polaroid.photo1_alt')}
+            loading="lazy"
+            decoding="async"
+            width="224"
+            height="256"
+          />
+        </div>
+        <div class="about-polaroid about-polaroid--right">
+          <img
+            src="/assets/marces-uno.webp"
+            alt={t('about.polaroid.photo2_alt')}
+            loading="lazy"
+            decoding="async"
+            width="224"
+            height="256"
+          />
+        </div>
+        <img
+          class="about-sticker about-sticker--instax"
+          src="/assets/instax-square.webp"
+          alt="Instax Square"
+          loading="lazy"
+          decoding="async"
+          width="112"
+          height="112"
+        />
+        <img
+          class="about-sticker about-sticker--mpk"
+          src="/assets/mpk-mini-plus.webp"
+          alt="MPK Mini Plus"
+          loading="lazy"
+          decoding="async"
+          width="240"
+          height="160"
+        />
+        <img
+          class="about-sticker about-sticker--xbox"
+          src="/assets/xbox-controller.webp"
+          alt="Xbox Controller"
+          loading="lazy"
+          decoding="async"
+          width="250"
+          height="174"
+        />
+      </div>
+    </div>
+
+    <section class="about-section">
+      <h2 class="about-title">{t('about.github.title')}</h2>
+      <p class="about-text">{t('about.github.p1')}</p>
+      <GitHubGraph username="itsarodav" />
+    </section>
+
+    <Footer lang={lang} />
+  </main>
+</Layout>
+
+<script>
+  import { gsap } from 'gsap';
+
+  const content = document.querySelector('.page-about');
+  if (content) {
+    gsap.from(content, {
+      opacity: 0,
+      y: 24,
+      duration: 0.8,
+      delay: 0.1,
+      ease: 'power2.out',
+    });
+  }
+</script>

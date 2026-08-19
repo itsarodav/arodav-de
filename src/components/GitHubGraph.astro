@@ -1,0 +1,286 @@
+---
+interface Props {
+  username: string;
+}
+
+const { username } = Astro.props;
+const currentYear = new Date().getFullYear();
+---
+
+<div class="gh-graph__wrapper">
+  <div class="gh-graph__header">
+    <h3 class="gh-graph__heading" data-gh-heading></h3>
+    <span class="gh-graph__updated">Updated every 24 hours</span>
+  </div>
+  <div class="gh-graph" data-gh-graph data-username={username} data-year={currentYear}>
+  <div class="gh-graph__grid" data-gh-grid>
+    <div class="gh-graph__skeleton"></div>
+  </div>
+  <div class="gh-graph__footer">
+    <a
+      class="gh-graph__link"
+      href={`https://github.com/${username}`}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      @{username}
+    </a>
+    <div class="gh-graph__legend">
+      <span class="gh-graph__legend-label">Less</span>
+      <span class="gh-graph__legend-cell" data-level="0"></span>
+      <span class="gh-graph__legend-cell" data-level="1"></span>
+      <span class="gh-graph__legend-cell" data-level="2"></span>
+      <span class="gh-graph__legend-cell" data-level="3"></span>
+      <span class="gh-graph__legend-cell" data-level="4"></span>
+      <span class="gh-graph__legend-label">More</span>
+    </div>
+  </div>
+</div>
+</div>
+
+<style lang="scss">
+  @use '../styles/tokens' as *;
+
+  .gh-graph__wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: $space-2;
+  }
+
+  .gh-graph__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .gh-graph__heading {
+    font-size: $text-xs;
+    font-weight: $font-semibold;
+    letter-spacing: $tracking-wide;
+    color: var(--color-text-tertiary);
+    min-height: 1.25em;
+  }
+
+  .gh-graph__updated {
+    font-size: $text-xs;
+    font-weight: $font-medium;
+    letter-spacing: $tracking-wide;
+    color: var(--color-text-tertiary);
+  }
+
+  .gh-graph {
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: $space-4;
+    background-color: var(--color-bg-secondary);
+    overflow-x: auto;
+
+    &__grid {
+      display: flex;
+      justify-content: center;
+    }
+
+    &__skeleton {
+      width: 100%;
+      height: 112px;
+      border-radius: 4px;
+      background: var(--color-border);
+      opacity: 0.3;
+      animation: gh-pulse 1.5s ease-in-out infinite;
+    }
+
+    :global(.gh-graph__table) {
+      border-spacing: 3px;
+      border-collapse: separate;
+      width: auto;
+    }
+
+    :global(.gh-graph__cell) {
+      width: 11px;
+      height: 11px;
+      min-width: 11px;
+      aspect-ratio: 1;
+      padding: 0;
+      border-radius: 2px;
+    }
+
+    :global(.gh-graph__cell[data-level='0']) { background-color: var(--gh-level-0, #ebedf0); }
+    :global(.gh-graph__cell[data-level='1']) { background-color: var(--gh-level-1, #9be9a8); }
+    :global(.gh-graph__cell[data-level='2']) { background-color: var(--gh-level-2, #40c463); }
+    :global(.gh-graph__cell[data-level='3']) { background-color: var(--gh-level-3, #30a14e); }
+    :global(.gh-graph__cell[data-level='4']) { background-color: var(--gh-level-4, #216e39); }
+
+    &__footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: $space-3;
+    }
+
+    &__link {
+      font-size: $text-xs;
+      font-weight: $font-medium;
+      letter-spacing: $tracking-wide;
+      color: var(--color-text-tertiary);
+      transition: color 0.2s ease;
+
+      @media (hover: hover) {
+        &:hover {
+          color: var(--color-link);
+        }
+      }
+    }
+
+    &__legend {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    &__legend-label {
+      font-size: 10px;
+      letter-spacing: $tracking-wide;
+      color: var(--color-text-tertiary);
+      margin: 0 $space-1;
+    }
+
+    &__legend-cell {
+      width: 11px;
+      height: 11px;
+      border-radius: 2px;
+
+      &[data-level='0'] { background-color: var(--gh-level-0, #ebedf0); }
+      &[data-level='1'] { background-color: var(--gh-level-1, #9be9a8); }
+      &[data-level='2'] { background-color: var(--gh-level-2, #40c463); }
+      &[data-level='3'] { background-color: var(--gh-level-3, #30a14e); }
+      &[data-level='4'] { background-color: var(--gh-level-4, #216e39); }
+    }
+  }
+
+  :global([data-theme='dark']) .gh-graph {
+    --gh-level-0: #22272e;
+    --gh-level-1: #0e4429;
+    --gh-level-2: #006d32;
+    --gh-level-3: #26a641;
+    --gh-level-4: #39d353;
+  }
+
+  @keyframes gh-pulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.15; }
+  }
+</style>
+
+<script>
+  const CACHE_KEY = 'gh-contributions';
+  const CACHE_TTL = 24 * 60 * 60 * 1000; // 24 hours
+
+  interface CachedData {
+    timestamp: number;
+    total: number;
+    contributions: { date: string; count: number; level: number }[];
+  }
+
+  function getCache(year: string): CachedData | null {
+    try {
+      const raw = localStorage.getItem(`${CACHE_KEY}-${year}`);
+      if (!raw) return null;
+      const cached: CachedData = JSON.parse(raw);
+      if (Date.now() - cached.timestamp > CACHE_TTL) {
+        localStorage.removeItem(`${CACHE_KEY}-${year}`);
+        return null;
+      }
+      return cached;
+    } catch {
+      return null;
+    }
+  }
+
+  function setCache(year: string, total: number, contributions: CachedData['contributions']) {
+    try {
+      localStorage.setItem(`${CACHE_KEY}-${year}`, JSON.stringify({
+        timestamp: Date.now(),
+        total,
+        contributions,
+      }));
+    } catch { /* quota exceeded, skip */ }
+  }
+
+  async function initGitHubGraph() {
+    const container = document.querySelector('[data-gh-graph]') as HTMLElement;
+    if (!container) return;
+
+    const username = container.dataset.username;
+    const year = container.dataset.year || String(new Date().getFullYear());
+    const heading = document.querySelector('[data-gh-heading]') as HTMLElement;
+    const grid = container.querySelector('[data-gh-grid]') as HTMLElement;
+
+    try {
+      let total: number;
+      let contributions: { date: string; count: number; level: number }[];
+
+      const cached = getCache(year);
+      if (cached) {
+        total = cached.total;
+        contributions = cached.contributions;
+      } else {
+        const res = await fetch(`https://github-contributions-api.jogruber.de/v4/${username}?y=${year}`);
+        if (!res.ok) throw new Error('Failed to fetch');
+        const data = await res.json();
+        total = data.total[year] ?? 0;
+        contributions = data.contributions;
+        setCache(year, total, contributions);
+      }
+
+      // Update heading
+      heading.textContent = `${total.toLocaleString()} contributions in ${year}`;
+
+      // Group by week (columns) — each column is 7 days (Sun–Sat)
+      const weeks: typeof contributions[] = [];
+      let currentWeek: typeof contributions = [];
+
+      for (const day of contributions) {
+        const d = new Date(day.date);
+        if (d.getDay() === 0 && currentWeek.length > 0) {
+          weeks.push(currentWeek);
+          currentWeek = [];
+        }
+        currentWeek.push(day);
+      }
+      if (currentWeek.length > 0) weeks.push(currentWeek);
+
+      // Build table
+      const table = document.createElement('table');
+      table.className = 'gh-graph__table';
+      table.setAttribute('aria-label', `GitHub contribution graph for ${year}`);
+
+      const tbody = document.createElement('tbody');
+
+      for (let row = 0; row < 7; row++) {
+        const tr = document.createElement('tr');
+        for (const week of weeks) {
+          const day = week.find((d) => new Date(d.date).getDay() === row);
+          const td = document.createElement('td');
+          td.className = 'gh-graph__cell';
+          if (day) {
+            td.dataset.level = String(day.level);
+            td.title = `${day.count} contribution${day.count !== 1 ? 's' : ''} on ${day.date}`;
+          } else {
+            td.dataset.level = '0';
+          }
+          tr.appendChild(td);
+        }
+        tbody.appendChild(tr);
+      }
+
+      table.appendChild(tbody);
+      grid.innerHTML = '';
+      grid.appendChild(table);
+    } catch {
+      heading.textContent = '';
+      grid.innerHTML = '<p style="font-size:0.75rem;color:var(--color-text-tertiary);text-align:center;padding:1rem 0;">Could not load contributions</p>';
+    }
+  }
+
+  initGitHubGraph();
+</script>
