@@ -72,29 +72,41 @@ const articles = [
         />
       </div>
 
-      <ExperienceEntry
-        company={t('experience.pakatnamu.company')}
-        role={t('experience.pakatnamu.role')}
-        period={t('experience.pakatnamu.period')}
-        description={t('experience.pakatnamu.description')}
-        variant="simple"
-      />
+      <div class="earlier-experience" data-earlier-experience>
+        <button class="earlier-experience__toggle" type="button" aria-expanded="false" data-earlier-toggle>
+          <span class="earlier-experience__label">{t('experience.earlier')}</span>
+          <span class="earlier-experience__icon">
+            <Icon name="chevron-down" size={16} color="currentColor" role="decorative" />
+          </span>
+        </button>
+        <div class="earlier-experience__content" aria-hidden="true">
+          <div class="earlier-experience__inner">
+            <ExperienceEntry
+              company={t('experience.pakatnamu.company')}
+              role={t('experience.pakatnamu.role')}
+              period={t('experience.pakatnamu.period')}
+              description={t('experience.pakatnamu.description')}
+              variant="simple"
+            />
 
-      <ExperienceEntry
-        company={t('experience.peruke.company')}
-        role={t('experience.peruke.role')}
-        period={t('experience.peruke.period')}
-        description={t('experience.peruke.description')}
-        variant="simple"
-      />
+            <ExperienceEntry
+              company={t('experience.peruke.company')}
+              role={t('experience.peruke.role')}
+              period={t('experience.peruke.period')}
+              description={t('experience.peruke.description')}
+              variant="simple"
+            />
 
-      <ExperienceEntry
-        company={t('experience.freelance.company')}
-        role={t('experience.freelance.role')}
-        period={t('experience.freelance.period')}
-        description={t('experience.freelance.description')}
-        variant="simple"
-      />
+            <ExperienceEntry
+              company={t('experience.freelance.company')}
+              role={t('experience.freelance.role')}
+              period={t('experience.freelance.period')}
+              description={t('experience.freelance.description')}
+              variant="simple"
+            />
+          </div>
+        </div>
+      </div>
     </section>
 
     <section class="section writing-section">
@@ -148,6 +160,65 @@ const articles = [
     margin-bottom: $space-6;
   }
 
+  .earlier-experience {
+    margin-top: $space-6;
+    margin-bottom: -$space-6;
+    transition: margin-bottom 0.35s cubic-bezier(0.25, 0.1, 0.25, 1);
+
+    &[data-expanded] {
+      margin-bottom: 0;
+    }
+
+    &__toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 0;
+      border: none;
+      background: none;
+      cursor: pointer;
+      font-size: $text-base;
+      font-weight: $font-medium;
+      letter-spacing: $tracking-normal;
+      color: var(--color-text-tertiary);
+      transition: color 0.2s ease;
+
+      @media (hover: hover) {
+        &:hover {
+          color: var(--color-text-secondary);
+        }
+      }
+    }
+
+    &__icon {
+      display: flex;
+      align-items: center;
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    &__content {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.35s cubic-bezier(0.25, 0.1, 0.25, 1);
+    }
+
+    &__inner {
+      overflow: hidden;
+      padding-top: $space-8;
+    }
+
+    &[data-expanded] {
+      .earlier-experience__icon {
+        transform: rotate(180deg);
+      }
+
+      .earlier-experience__content {
+        grid-template-rows: 1fr;
+      }
+    }
+  }
+
   .writing-preview {
     display: flex;
     flex-direction: column;
@@ -186,3 +257,23 @@ const articles = [
     transition: opacity 0.2s ease;
   }
 </style>
+
+<script>
+  const container = document.querySelector('[data-earlier-experience]');
+  const toggle = document.querySelector('[data-earlier-toggle]');
+
+  if (container && toggle) {
+    toggle.addEventListener('click', () => {
+      const expanded = container.hasAttribute('data-expanded');
+      if (expanded) {
+        container.removeAttribute('data-expanded');
+        toggle.setAttribute('aria-expanded', 'false');
+        container.querySelector('.earlier-experience__content')?.setAttribute('aria-hidden', 'true');
+      } else {
+        container.setAttribute('data-expanded', '');
+        toggle.setAttribute('aria-expanded', 'true');
+        container.querySelector('.earlier-experience__content')?.setAttribute('aria-hidden', 'false');
+      }
+    });
+  }
+</script>
