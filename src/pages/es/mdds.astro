@@ -7,6 +7,7 @@ import BackButton from '@/components/BackButton.astro';
 import Aside from '@/components/Aside.astro';
 import Footer from '@/components/Footer.astro';
 import PipelineDiagram from '@/components/PipelineDiagram.astro';
+import AdoptionChart from '@/components/AdoptionChart.astro';
 import { useTranslations } from '@/i18n';
 
 const lang = 'es';
@@ -73,6 +74,8 @@ const t = useTranslations(lang);
         <h2 class="case-section__title">{t('case.mdds.s2.title')}</h2>
         <p class="case-section__text">{t('case.mdds.s2.p1')}</p>
         <p class="case-section__text">{t('case.mdds.s2.p2')}</p>
+
+        <AdoptionChart lang={lang} />
       </section>
 
       <section class="case-section">

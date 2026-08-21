@@ -1,0 +1,191 @@
+---
+import { useTranslations } from '@/i18n';
+
+interface Props {
+  lang: 'en' | 'es';
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const bars = [
+  { name: `${t('case.mdds.adoption.component')} 1`, andrea: 83, team: 17 },
+  { name: `${t('case.mdds.adoption.component')} 2`, andrea: 41, team: 59 },
+  { name: `${t('case.mdds.adoption.component')} 3`, andrea: 100, team: 0 },
+  { name: `${t('case.mdds.adoption.component')} 4`, andrea: 78, team: 22 },
+];
+
+// Layout constants
+const labelW = 105;
+const chartX = labelW + 10;
+const barMaxW = 380;
+const barH = 22;
+const barGap = 24;
+const barR = 3;
+
+const legendY = 14;
+const barsStartY = 44;
+const axisY = barsStartY + bars.length * (barH + barGap) - barGap + 16;
+const viewW = chartX + barMaxW + 16;
+const viewH = axisY + 20;
+
+const axisTicks = [0, 25, 50, 75, 100];
+---
+
+<figure class="adoption-chart" role="img" aria-label={t('case.mdds.adoption.title_sr')}>
+  <svg
+    viewBox={`0 0 ${viewW} ${viewH}`}
+    xmlns="http://www.w3.org/2000/svg"
+    class="adoption-svg"
+  >
+    <!-- Legend -->
+    <rect x={chartX} y={legendY} width="12" height="12" rx="2" class="adoption-bar--andrea" />
+    <text x={chartX + 18} y={legendY + 6} dominant-baseline="central" class="adoption-legend-text">
+      {t('case.mdds.adoption.legend_andrea')}
+    </text>
+    <rect x={chartX + 160} y={legendY} width="12" height="12" rx="2" class="adoption-bar--team" />
+    <text x={chartX + 178} y={legendY + 6} dominant-baseline="central" class="adoption-legend-text">
+      {t('case.mdds.adoption.legend_team')}
+    </text>
+
+    <!-- Grid lines -->
+    {axisTicks.map((pct) => {
+      const x = chartX + (barMaxW * pct) / 100;
+      return (
+        <line x1={x} y1={barsStartY - 6} x2={x} y2={axisY - 10} class="adoption-grid" />
+      );
+    })}
+
+    <!-- Axis labels -->
+    {axisTicks.map((pct) => {
+      const x = chartX + (barMaxW * pct) / 100;
+      return (
+        <text x={x} y={axisY} text-anchor="middle" class="adoption-axis-text">
+          {pct}%
+        </text>
+      );
+    })}
+
+    <!-- Bars -->
+    {bars.map((bar, i) => {
+      const y = barsStartY + i * (barH + barGap);
+      const andreaW = (barMaxW * bar.andrea) / 100;
+      const teamW = (barMaxW * bar.team) / 100;
+      return (
+        <g>
+          {/* Label */}
+          <text
+            x={labelW}
+            y={y + barH / 2}
+            text-anchor="end"
+            dominant-baseline="central"
+            class="adoption-label"
+          >
+            {bar.name}
+          </text>
+
+          {/* Andrea bar */}
+          <rect
+            x={chartX}
+            y={y}
+            width={andreaW}
+            height={barH}
+            rx={barR}
+            class="adoption-bar--andrea"
+          />
+          {bar.andrea >= 15 && (
+            <text
+              x={chartX + andreaW / 2}
+              y={y + barH / 2}
+              text-anchor="middle"
+              dominant-baseline="central"
+              class="adoption-pct"
+            >
+              {bar.andrea}%
+            </text>
+          )}
+
+          {/* Team bar */}
+          {bar.team > 0 && (
+            <rect
+              x={chartX + andreaW + 2}
+              y={y}
+              width={teamW - 2}
+              height={barH}
+              rx={barR}
+              class="adoption-bar--team"
+            />
+          )}
+          {bar.team >= 15 && (
+            <text
+              x={chartX + andreaW + 2 + (teamW - 2) / 2}
+              y={y + barH / 2}
+              text-anchor="middle"
+              dominant-baseline="central"
+              class="adoption-pct"
+            >
+              {bar.team}%
+            </text>
+          )}
+        </g>
+      );
+    })}
+  </svg>
+</figure>
+
+<style lang="scss">
+  @use '../styles/tokens' as *;
+
+  .adoption-chart {
+    margin: $space-12 0;
+    padding: 0;
+  }
+
+  .adoption-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+    overflow: visible;
+  }
+
+  .adoption-bar--andrea {
+    fill: var(--color-link);
+  }
+
+  .adoption-bar--team {
+    fill: var(--color-accent);
+  }
+
+  .adoption-pct {
+    fill: var(--color-bg-primary);
+    font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  .adoption-label {
+    fill: var(--color-text-primary);
+    font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+  }
+
+  .adoption-legend-text {
+    fill: var(--color-text-secondary);
+    font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+  }
+
+  .adoption-axis-text {
+    fill: var(--color-text-tertiary);
+    font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+  }
+
+  .adoption-grid {
+    stroke: var(--color-border);
+    stroke-width: 0.5;
+  }
+</style>
