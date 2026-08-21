@@ -1,0 +1,210 @@
+---
+import { useTranslations } from '@/i18n';
+
+interface Props {
+  lang: 'en' | 'es';
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const steps = [
+  { title: t('case.mdds.pipeline.tokens'), sub: t('case.mdds.pipeline.tokens_sub') },
+  { title: t('case.mdds.pipeline.component'), sub: t('case.mdds.pipeline.component_sub') },
+  { title: t('case.mdds.pipeline.docs'), sub: t('case.mdds.pipeline.docs_sub') },
+  { title: t('case.mdds.pipeline.migration'), sub: t('case.mdds.pipeline.migration_sub') },
+];
+
+// Layout constants
+const boxW = 120;
+const boxH = 50;
+const gap = 28;
+const padX = 16;
+const startY = 10;
+const centerY = startY + boxH / 2;
+const viewW = padX * 2 + boxW * 4 + gap * 3;
+const boxBottom = startY + boxH;
+const returnY = boxBottom + 24;
+const viewH = returnY + 14;
+
+// Return line key points (Migration bottom → Component bottom)
+const migCenterX = padX + (boxW + gap) * 3 + boxW / 2;
+const compCenterX = padX + (boxW + gap) * 1 + boxW / 2;
+const r = 8; // corner radius
+---
+
+<figure class="pipeline-diagram" role="img" aria-label={t('case.mdds.pipeline.title_sr')}>
+  <svg
+    viewBox={`0 0 ${viewW} ${viewH}`}
+    xmlns="http://www.w3.org/2000/svg"
+    class="pipeline-svg"
+  >
+    <defs>
+      <marker
+        id="pipeline-arrow"
+        viewBox="0 0 8 8"
+        refX="7"
+        refY="4"
+        markerWidth="5"
+        markerHeight="5"
+        orient="auto-start-reverse"
+      >
+        <path
+          d="M1.5 1L6.5 4L1.5 7"
+          fill="none"
+          stroke="var(--pipeline-line)"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </marker>
+    </defs>
+
+    <!-- Dashed flowing line (background) -->
+    <line
+      x1={padX + boxW / 2}
+      y1={centerY}
+      x2={padX + boxW * 4 + gap * 3 - boxW / 2}
+      y2={centerY}
+      class="pipeline-line"
+      marker-end="url(#pipeline-arrow)"
+    />
+
+    <!-- Arrow chevrons at connection points -->
+    {[0, 1, 2].map((i) => {
+      const x = padX + (boxW + gap) * (i + 1) - 6;
+      return (
+        <g class="pipeline-chevron">
+          <path
+            d={`M${x - 4} ${centerY - 5}L${x + 3} ${centerY}L${x - 4} ${centerY + 5}`}
+            fill="none"
+            stroke="var(--pipeline-line)"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </g>
+      );
+    })}
+
+    <!-- Return line: Migration → Component (below boxes) -->
+    <path
+      d={`M${migCenterX} ${boxBottom} L${migCenterX} ${returnY - r} Q${migCenterX} ${returnY} ${migCenterX - r} ${returnY} L${compCenterX + r} ${returnY} Q${compCenterX} ${returnY} ${compCenterX} ${returnY - r} L${compCenterX} ${boxBottom}`}
+      class="pipeline-return"
+    />
+    <path
+      d={`M${compCenterX - 4} ${boxBottom + 6} L${compCenterX} ${boxBottom} L${compCenterX + 4} ${boxBottom + 6}`}
+      fill="none"
+      stroke="var(--pipeline-line)"
+      stroke-width="1.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+
+    <!-- Step boxes -->
+    {steps.map((step, i) => {
+      const x = padX + (boxW + gap) * i;
+      return (
+        <g>
+          <rect
+            x={x}
+            y={startY}
+            width={boxW}
+            height={boxH}
+            rx="8"
+            class="pipeline-box"
+          />
+          <text
+            x={x + boxW / 2}
+            y={startY + 20}
+            text-anchor="middle"
+            dominant-baseline="central"
+            class="pipeline-title"
+          >
+            {step.title}
+          </text>
+          <text
+            x={x + boxW / 2}
+            y={startY + 36}
+            text-anchor="middle"
+            dominant-baseline="central"
+            class="pipeline-sub"
+          >
+            {step.sub}
+          </text>
+        </g>
+      );
+    })}
+  </svg>
+</figure>
+
+<style lang="scss">
+  @use '../styles/tokens' as *;
+
+  .pipeline-diagram {
+    --pipeline-line: var(--color-link);
+    --pipeline-box-bg: var(--color-bg-primary);
+    --pipeline-box-border: var(--color-border);
+    --pipeline-title-color: var(--color-text-primary);
+    --pipeline-sub-color: var(--color-text-tertiary);
+
+    margin: $space-12 0;
+    padding: 0;
+  }
+
+  .pipeline-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+    overflow: visible;
+  }
+
+  .pipeline-line {
+    stroke: var(--pipeline-line);
+    stroke-width: 1.5;
+    stroke-dasharray: 6 4;
+    stroke-linecap: round;
+    animation: pipeline-flow 1.2s linear infinite;
+  }
+
+  @keyframes pipeline-flow {
+    to {
+      stroke-dashoffset: -10;
+    }
+  }
+
+  .pipeline-return {
+    fill: none;
+    stroke: var(--pipeline-line);
+    stroke-width: 1.5;
+    stroke-dasharray: 6 4;
+    stroke-linecap: round;
+    animation: pipeline-flow-reverse 1.2s linear infinite;
+  }
+
+  @keyframes pipeline-flow-reverse {
+    to {
+      stroke-dashoffset: -10;
+    }
+  }
+
+  .pipeline-box {
+    fill: var(--pipeline-box-bg);
+    stroke: var(--pipeline-box-border);
+    stroke-width: 1;
+  }
+
+  .pipeline-title {
+    fill: var(--pipeline-title-color);
+    font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .pipeline-sub {
+    fill: var(--pipeline-sub-color);
+    font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+  }
+</style>

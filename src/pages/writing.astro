@@ -30,8 +30,7 @@ const sortedPosts = allPosts.sort(
 
     <div class="writing-list">
       {sortedPosts.map((post) => {
-        const d = post.data.date;
-        const formattedDate = `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${String(d.getFullYear()).slice(-2)}`;
+        const formattedDate = post.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
         return (
           <WritingCard
             title={post.data.title}
