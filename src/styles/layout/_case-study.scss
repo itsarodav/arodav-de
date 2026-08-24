@@ -151,6 +151,40 @@
   }
 }
 
+// Detail list
+.case-detail-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 $space-6 0;
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+
+  &__item {
+    font-size: $text-sm;
+    line-height: $line-relaxed;
+    letter-spacing: $tracking-normal;
+    color: var(--color-text-secondary);
+    padding-left: $space-4;
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 10px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: var(--color-text-tertiary);
+    }
+
+    @include respond-to(md) {
+      font-size: $text-base;
+    }
+  }
+}
+
 // Stats grid
 .case-stats {
   display: grid;
