@@ -6,6 +6,7 @@ import Breadcrumb from '@/components/Breadcrumb.astro';
 import BackButton from '@/components/BackButton.astro';
 import Aside from '@/components/Aside.astro';
 import Footer from '@/components/Footer.astro';
+import ThemeDiagram from '@/components/ThemeDiagram.astro';
 import { useTranslations } from '@/i18n';
 
 const lang = 'en';
@@ -66,6 +67,8 @@ const t = useTranslations(lang);
           <h3 class="case-subsection__title">{t('case.linkims.s1.p3.title')}</h3>
           <p class="case-subsection__text">{t('case.linkims.s1.p3.body')}</p>
         </div>
+
+        <ThemeDiagram lang={lang} />
 
         <div class="case-subsection">
           <h3 class="case-subsection__title">{t('case.linkims.s1.p4.title')}</h3>

@@ -1,0 +1,231 @@
+---
+import { useTranslations } from '@/i18n';
+
+interface Props {
+  lang: 'en' | 'es';
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const artists = [
+  { title: t('case.linkims.theme_diagram.artist1'), sub: t('case.linkims.theme_diagram.artist1_sub') },
+  { title: t('case.linkims.theme_diagram.artist2'), sub: t('case.linkims.theme_diagram.artist2_sub') },
+  { title: t('case.linkims.theme_diagram.artist3'), sub: t('case.linkims.theme_diagram.artist3_sub') },
+];
+
+// Layout constants
+const padX = 16;
+const padY = 10;
+
+// Shared box (top)
+const sharedW = 400;
+const sharedH = 64;
+const sharedX = padX + 140 - padX;
+const sharedY = padY;
+
+// Artist boxes (bottom row)
+const artistW = 160;
+const artistH = 50;
+const artistGap = 20;
+const artistTotalW = artistW * 3 + artistGap * 2;
+const artistStartX = (sharedX + sharedW / 2) - artistTotalW / 2;
+const artistY = sharedY + sharedH + 50;
+
+// Arrows
+const arrowStartY = sharedY + sharedH;
+const arrowEndY = artistY;
+
+// View dimensions
+const viewW = Math.max(sharedX + sharedW, artistStartX + artistTotalW) + padX;
+const viewH = artistY + artistH + 48;
+
+// Footer text
+const footerY = artistY + artistH + 22;
+const centerX = sharedX + sharedW / 2;
+---
+
+<figure class="theme-diagram" role="img" aria-label={t('case.linkims.theme_diagram.title_sr')}>
+  <svg
+    viewBox={`0 0 ${viewW} ${viewH}`}
+    xmlns="http://www.w3.org/2000/svg"
+    class="theme-svg"
+  >
+    <defs>
+      <marker
+        id="theme-arrow"
+        viewBox="0 0 8 8"
+        refX="7"
+        refY="4"
+        markerWidth="5"
+        markerHeight="5"
+        orient="auto-start-reverse"
+      >
+        <path
+          d="M1.5 1L6.5 4L1.5 7"
+          fill="none"
+          stroke="var(--theme-line)"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </marker>
+    </defs>
+
+    <!-- Shared component box (dashed border) -->
+    <rect
+      x={sharedX}
+      y={sharedY}
+      width={sharedW}
+      height={sharedH}
+      rx="12"
+      class="theme-shared-box"
+    />
+    <text
+      x={sharedX + sharedW / 2}
+      y={sharedY + 26}
+      text-anchor="middle"
+      class="theme-title"
+    >
+      {t('case.linkims.theme_diagram.shared')}
+    </text>
+    <text
+      x={sharedX + sharedW / 2}
+      y={sharedY + 44}
+      text-anchor="middle"
+      class="theme-sub"
+    >
+      {t('case.linkims.theme_diagram.shared_sub')}
+    </text>
+
+    <!-- Animated arrows from shared box to each artist -->
+    {artists.map((_, i) => {
+      const artistCenterX = artistStartX + (artistW + artistGap) * i + artistW / 2;
+      return (
+        <line
+          x1={artistCenterX}
+          y1={arrowStartY}
+          x2={artistCenterX}
+          y2={arrowEndY}
+          class="theme-arrow-line"
+          marker-end="url(#theme-arrow)"
+        />
+      );
+    })}
+
+    <!-- Artist boxes -->
+    {artists.map((artist, i) => {
+      const x = artistStartX + (artistW + artistGap) * i;
+      return (
+        <g>
+          <rect
+            x={x}
+            y={artistY}
+            width={artistW}
+            height={artistH}
+            rx="8"
+            class="theme-artist-box"
+          />
+          <text
+            x={x + artistW / 2}
+            y={artistY + 20}
+            text-anchor="middle"
+            dominant-baseline="central"
+            class="theme-title"
+          >
+            {artist.title}
+          </text>
+          <text
+            x={x + artistW / 2}
+            y={artistY + 36}
+            text-anchor="middle"
+            dominant-baseline="central"
+            class="theme-sub"
+          >
+            {artist.sub}
+          </text>
+        </g>
+      );
+    })}
+
+    <!-- Footer text -->
+    <text
+      x={centerX}
+      y={footerY}
+      text-anchor="middle"
+      class="theme-footer"
+    >
+      {t('case.linkims.theme_diagram.footer')}
+    </text>
+  </svg>
+</figure>
+
+<style lang="scss">
+  @use '../styles/tokens' as *;
+
+  .theme-diagram {
+    --theme-line: var(--color-link);
+    --theme-box-bg: var(--color-bg-primary);
+    --theme-box-border: var(--color-border);
+    --theme-title-color: var(--color-text-primary);
+    --theme-sub-color: var(--color-text-tertiary);
+
+    margin: $space-12 0;
+    padding: 0;
+  }
+
+  .theme-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+    overflow: visible;
+  }
+
+  .theme-shared-box {
+    fill: none;
+    stroke: var(--theme-box-border);
+    stroke-width: 0.75;
+    stroke-dasharray: 3 4;
+  }
+
+  .theme-arrow-line {
+    stroke: var(--theme-line);
+    stroke-width: 1.5;
+    stroke-dasharray: 6 4;
+    stroke-linecap: round;
+    animation: theme-flow 1.2s linear infinite;
+  }
+
+  @keyframes theme-flow {
+    to {
+      stroke-dashoffset: -10;
+    }
+  }
+
+  .theme-artist-box {
+    fill: var(--theme-box-bg);
+    stroke: var(--theme-box-border);
+    stroke-width: 1;
+  }
+
+  .theme-title {
+    fill: var(--theme-title-color);
+    font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .theme-sub {
+    fill: var(--theme-sub-color);
+    font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+  }
+
+  .theme-footer {
+    fill: var(--theme-sub-color);
+    font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+  }
+</style>
