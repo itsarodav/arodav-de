@@ -16,7 +16,7 @@ const artists = [
 
 // Layout constants
 const padX = 16;
-const padY = 10;
+const padY = 20;
 
 // Shared box (top)
 const sharedW = 400;
@@ -30,7 +30,7 @@ const artistH = 50;
 const artistGap = 20;
 const artistTotalW = artistW * 3 + artistGap * 2;
 const artistStartX = (sharedX + sharedW / 2) - artistTotalW / 2;
-const artistY = sharedY + sharedH + 50;
+const artistY = sharedY + sharedH + 66;
 
 // Arrows
 const arrowStartY = sharedY + sharedH;
@@ -38,10 +38,10 @@ const arrowEndY = artistY;
 
 // View dimensions
 const viewW = Math.max(sharedX + sharedW, artistStartX + artistTotalW) + padX;
-const viewH = artistY + artistH + 48;
+const viewH = artistY + artistH + 56;
 
 // Footer text
-const footerY = artistY + artistH + 22;
+const footerY = artistY + artistH + 34;
 const centerX = sharedX + sharedW / 2;
 ---
 

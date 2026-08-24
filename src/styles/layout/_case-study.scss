@@ -39,7 +39,7 @@
 .case-hero__title {
   font-size: $text-base;
   font-weight: $font-semibold;
-  line-height: $line-snug;
+  line-height: $line-normal;
   letter-spacing: $tracking-tight;
   color: var(--color-text-primary);
   margin-bottom: $space-3;
@@ -88,7 +88,7 @@
 .case-section__title {
   font-size: $text-base;
   font-weight: $font-semibold;
-  line-height: $line-snug;
+  line-height: $line-normal;
   letter-spacing: $tracking-tight;
   color: var(--color-text-primary);
   margin-bottom: $space-4;
