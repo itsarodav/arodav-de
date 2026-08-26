@@ -1,0 +1,141 @@
+---
+interface Props {
+  caption?: string;
+}
+
+const { caption } = Astro.props;
+---
+
+<figure class="badge-ticker-wrapper">
+  <div class="badge-ticker">
+    <div class="badge-ticker__track">
+      <img src="/assets/badge-1-de.svg" alt="" width="208" height="333" class="badge-ticker__item" />
+      <img src="/assets/badge-2-de.svg" alt="" width="208" height="333" class="badge-ticker__item" />
+      <img src="/assets/badge-3-de.svg" alt="" width="208" height="333" class="badge-ticker__item" />
+      <img src="/assets/badge-4-de.svg" alt="" width="208" height="333" class="badge-ticker__item" />
+      <!-- Duplicated set for seamless loop -->
+      <img src="/assets/badge-1-de.svg" alt="" width="208" height="333" class="badge-ticker__item" />
+      <img src="/assets/badge-2-de.svg" alt="" width="208" height="333" class="badge-ticker__item" />
+      <img src="/assets/badge-3-de.svg" alt="" width="208" height="333" class="badge-ticker__item" />
+      <img src="/assets/badge-4-de.svg" alt="" width="208" height="333" class="badge-ticker__item" />
+    </div>
+  </div>
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>
+
+<style>
+  .badge-ticker-wrapper {
+    margin: 1.5rem 0;
+  }
+
+  .badge-ticker-wrapper figcaption {
+    font-size: 0.75rem;
+    line-height: 1.5;
+    letter-spacing: 0.025em;
+    color: var(--color-text-tertiary);
+    text-align: center;
+    margin-top: 0.75rem;
+  }
+
+  .badge-ticker {
+    overflow: hidden;
+    padding: 2.5rem 0;
+    mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      black 10%,
+      black 90%,
+      transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      black 10%,
+      black 90%,
+      transparent 100%
+    );
+  }
+
+  .badge-ticker__track {
+    display: flex;
+    gap: 2.5rem;
+    width: max-content;
+    will-change: transform;
+  }
+
+  .badge-ticker__item {
+    flex-shrink: 0;
+    height: 240px;
+    width: auto;
+    opacity: 0.85;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .badge-ticker__item:hover {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+
+  const track = document.querySelector('.badge-ticker__track');
+
+  if (track) {
+    const items = track.querySelectorAll('.badge-ticker__item');
+    const half = items.length / 2;
+    const gap = 40; // 2.5rem in px
+
+    function initTicker() {
+      let singleSetWidth = 0;
+      for (let i = 0; i < half; i++) {
+        singleSetWidth += (items[i] as HTMLElement).offsetWidth + gap;
+      }
+
+      gsap.fromTo(
+        items,
+        { opacity: 0, y: 12 },
+        {
+          opacity: 0.85,
+          y: 0,
+          duration: 0.6,
+          stagger: 0.08,
+          ease: 'power2.out',
+          onComplete: startLoop,
+        }
+      );
+
+      function startLoop() {
+        gsap.to(track, {
+          x: -singleSetWidth,
+          duration: 30,
+          ease: 'none',
+          repeat: -1,
+          modifiers: {
+            x: gsap.utils.unitize((x: number) => {
+              return parseFloat(String(x)) % singleSetWidth;
+            }),
+          },
+        });
+      }
+    }
+
+    const imgElements = track.querySelectorAll('img');
+    let loaded = 0;
+    const total = imgElements.length;
+
+    function onLoad() {
+      loaded++;
+      if (loaded >= total) initTicker();
+    }
+
+    imgElements.forEach((img) => {
+      if (img.complete) {
+        onLoad();
+      } else {
+        img.addEventListener('load', onLoad);
+      }
+    });
+  }
+</script>

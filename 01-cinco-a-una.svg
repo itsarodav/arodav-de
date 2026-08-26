@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 260" width="800" height="260" role="img" aria-labelledby="t01 d01" font-family="Albert Sans, system-ui, sans-serif">
+  <title id="t01">De cinco herramientas sueltas a un solo proceso</title>
+  <desc id="d01">Cinco herramientas desconectadas a la izquierda se convierten en un único recorrido guiado a la derecha.</desc>
+
+  <!-- ============ IZQUIERDA: cinco herramientas sueltas ============ -->
+  <g class="r-scatter">
+
+    <g class="r-tool" data-index="0" transform="translate(24,44) rotate(-5 68 21)">
+      <g class="r-tool__i">
+        <rect width="136" height="42" rx="10" fill="none" stroke="var(--riffims-line, #D9D9D9)" stroke-width="2" stroke-dasharray="5 5"/>
+        <text x="68" y="26" text-anchor="middle" font-size="13" font-weight="500" fill="var(--riffims-muted, #8A8A8A)">DAW</text>
+      </g>
+    </g>
+
+    <g class="r-tool" data-index="1" transform="translate(180,26) rotate(4 68 21)">
+      <g class="r-tool__i">
+        <rect width="136" height="42" rx="10" fill="none" stroke="var(--riffims-line, #D9D9D9)" stroke-width="2" stroke-dasharray="5 5"/>
+        <text x="68" y="26" text-anchor="middle" font-size="13" font-weight="500" fill="var(--riffims-muted, #8A8A8A)">Distribuidora</text>
+      </g>
+    </g>
+
+    <g class="r-tool" data-index="2" transform="translate(8,116) rotate(3 68 21)">
+      <g class="r-tool__i">
+        <rect width="136" height="42" rx="10" fill="none" stroke="var(--riffims-line, #D9D9D9)" stroke-width="2" stroke-dasharray="5 5"/>
+        <text x="68" y="26" text-anchor="middle" font-size="13" font-weight="500" fill="var(--riffims-muted, #8A8A8A)">Diseño</text>
+      </g>
+    </g>
+
+    <g class="r-tool" data-index="3" transform="translate(168,110) rotate(-3 68 21)">
+      <g class="r-tool__i">
+        <rect width="136" height="42" rx="10" fill="none" stroke="var(--riffims-line, #D9D9D9)" stroke-width="2" stroke-dasharray="5 5"/>
+        <text x="68" y="26" text-anchor="middle" font-size="13" font-weight="500" fill="var(--riffims-muted, #8A8A8A)">Hoja de cálculo</text>
+      </g>
+    </g>
+
+    <g class="r-tool" data-index="4" transform="translate(88,182) rotate(6 68 21)">
+      <g class="r-tool__i">
+        <rect width="136" height="42" rx="10" fill="none" stroke="var(--riffims-line, #D9D9D9)" stroke-width="2" stroke-dasharray="5 5"/>
+        <text x="68" y="26" text-anchor="middle" font-size="13" font-weight="500" fill="var(--riffims-muted, #8A8A8A)">Buscador</text>
+      </g>
+    </g>
+
+  </g>
+
+  <!-- ============ FLECHA ============ -->
+  <g class="r-arrow" transform="translate(354,122)">
+    <path class="r-arrow__line" pathLength="1" d="M0 8 H60" fill="none" stroke="var(--riffims-ink, #171717)" stroke-width="2" stroke-linecap="round"/>
+    <path class="r-arrow__head" pathLength="1" d="M52 1 L60 8 L52 15" fill="none" stroke="var(--riffims-ink, #171717)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- ============ DERECHA: un solo recorrido ============ -->
+  <g class="r-result" transform="translate(470,66)">
+    <g class="r-result__i">
+      <rect width="306" height="128" rx="16" fill="var(--riffims-brand, #FF5E2D)"/>
+      <text x="28" y="42" font-size="15" font-weight="600" fill="#FFFFFF">Riffims</text>
+      <text x="28" y="66" font-size="13" font-weight="400" fill="#FFFFFF" opacity="0.82">Un recorrido, diez pasos, en orden</text>
+
+      <!-- diez nodos del recorrido -->
+      <g class="r-result__dots" transform="translate(28,94)">
+        <circle class="r-dot" data-index="0"  cx="0"   cy="0" r="5" fill="#FFFFFF"/>
+        <circle class="r-dot" data-index="1"  cx="28"  cy="0" r="5" fill="#FFFFFF"/>
+        <circle class="r-dot" data-index="2"  cx="56"  cy="0" r="5" fill="#FFFFFF"/>
+        <circle class="r-dot" data-index="3"  cx="84"  cy="0" r="5" fill="#FFFFFF"/>
+        <circle class="r-dot" data-index="4"  cx="112" cy="0" r="5" fill="#FFFFFF"/>
+        <circle class="r-dot" data-index="5"  cx="140" cy="0" r="5" fill="#FFFFFF"/>
+        <circle class="r-dot" data-index="6"  cx="168" cy="0" r="5" fill="#FFFFFF"/>
+        <circle class="r-dot" data-index="7"  cx="196" cy="0" r="5" fill="#FFFFFF"/>
+        <circle class="r-dot" data-index="8"  cx="224" cy="0" r="5" fill="#FFFFFF"/>
+        <circle class="r-dot" data-index="9"  cx="252" cy="0" r="5" fill="#FFFFFF"/>
+      </g>
+    </g>
+  </g>
+
+</svg>

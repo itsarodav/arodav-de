@@ -6,6 +6,7 @@ import Breadcrumb from '@/components/Breadcrumb.astro';
 import BackButton from '@/components/BackButton.astro';
 import Aside from '@/components/Aside.astro';
 import Footer from '@/components/Footer.astro';
+import BadgeTicker from '@/components/BadgeTicker.astro';
 import { useTranslations } from '@/i18n';
 
 const lang = 'en';
@@ -67,6 +68,8 @@ const t = useTranslations(lang);
           <h3 class="case-subsection__title">{t('case.riffims.s1.p1.title')}</h3>
           <p class="case-subsection__text">{t('case.riffims.s1.p1.body')}</p>
         </div>
+
+        <BadgeTicker caption={t('case.riffims.badges.caption')} />
 
         <div class="case-subsection">
           <h3 class="case-subsection__title">{t('case.riffims.s1.p2.title')}</h3>
