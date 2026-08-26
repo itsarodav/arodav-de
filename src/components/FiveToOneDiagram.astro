@@ -1,0 +1,175 @@
+---
+interface Props {
+  lang: 'en' | 'es';
+}
+
+const { lang } = Astro.props;
+
+const tools = lang === 'es'
+  ? ['DAW', 'Distribuidora', 'Diseño', 'Hoja de cálculo', 'Buscador']
+  : ['DAW', 'Distributor', 'Design', 'Spreadsheet', 'Search engine'];
+
+const cardSubtitle = lang === 'es' ? 'Un recorrido en orden' : 'One path, in order';
+const ariaLabel = lang === 'es'
+  ? 'De cinco herramientas sueltas a un solo proceso'
+  : 'From five loose tools to a single process';
+
+// Positions — shifted down 25px from original for vertical centering in taller viewBox
+const positions = [
+  { x: 24,  y: 69,  rot: -5 },
+  { x: 180, y: 51,  rot: 4 },
+  { x: 8,   y: 141, rot: 3 },
+  { x: 168, y: 135, rot: -3 },
+  { x: 88,  y: 207, rot: 6 },
+];
+---
+
+<figure class="five-to-one" role="img" aria-label={ariaLabel}>
+  <svg
+    viewBox="0 0 800 290"
+    xmlns="http://www.w3.org/2000/svg"
+    class="five-to-one__svg"
+  >
+    <!-- Left: five scattered tool tags -->
+    <g class="fto-scatter">
+      {positions.map((p, i) => (
+        <g class="fto-tool" data-index={i} transform={`translate(${p.x},${p.y}) rotate(${p.rot} 68 21)`}>
+          <g class="fto-tool__inner">
+            <rect width="136" height="42" rx="10" fill="none" stroke="var(--fto-tag-border)" stroke-width="2" stroke-dasharray="5 5" />
+            <text x="68" y="26" text-anchor="middle" class="fto-tool__text">{tools[i]}</text>
+          </g>
+        </g>
+      ))}
+    </g>
+
+    <!-- Center: dashed arrow -->
+    <g class="fto-arrow" transform="translate(354,147)">
+      <line class="fto-arrow__line" x1="0" y1="8" x2="60" y2="8" />
+      <path class="fto-arrow__head" d="M52 1 L60 8 L52 15" fill="none" stroke="var(--fto-line)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    </g>
+
+    <!-- Right: Riffims card -->
+    <g class="fto-card" transform="translate(470,75)">
+      <rect width="306" height="140" rx="16" class="fto-card__bg" />
+      <text x="28" y="42" class="fto-card__title">Riffims</text>
+      <text x="28" y="64" class="fto-card__subtitle">{cardSubtitle}</text>
+
+      <!-- Ten step dots — cx starts at r (5) so left edge aligns with text at x=28 -->
+      <g class="fto-dots" transform="translate(28,96)">
+        {Array.from({ length: 10 }).map((_, i) => (
+          <circle class="fto-dot" data-index={i} cx={5 + i * 25} cy="0" r="5" fill="rgba(255,255,255,0.3)" />
+        ))}
+      </g>
+    </g>
+  </svg>
+</figure>
+
+<style lang="scss">
+  @use '../styles/tokens' as *;
+
+  .five-to-one {
+    --fto-line: var(--color-link);
+    --fto-tag-border: var(--color-border);
+    --fto-tag-text: var(--color-text-tertiary);
+    --fto-card-bg: var(--color-link);
+
+    margin: $space-12 auto;
+    padding: $space-4 0;
+    max-width: 800px;
+  }
+
+  .five-to-one__svg {
+    width: 100%;
+    height: auto;
+    display: block;
+    overflow: visible;
+    font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+
+  .fto-tool__text {
+    fill: var(--fto-tag-text);
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  /* Dashed flowing arrow */
+  .fto-arrow__line {
+    stroke: var(--fto-line);
+    stroke-width: 2;
+    stroke-dasharray: 6 4;
+    stroke-linecap: round;
+    animation: fto-flow 1.2s linear infinite;
+  }
+
+  .fto-arrow__head {
+    stroke: var(--fto-line);
+  }
+
+  @keyframes fto-flow {
+    to {
+      stroke-dashoffset: -10;
+    }
+  }
+
+  .fto-card__bg {
+    fill: var(--fto-card-bg);
+  }
+
+  .fto-card__title {
+    fill: #FFFFFF;
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  .fto-card__subtitle {
+    fill: #FFFFFF;
+    font-size: 13px;
+    font-weight: 400;
+    opacity: 0.82;
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+
+  const diagram = document.querySelector('.five-to-one');
+  if (diagram) {
+    // Float the inner groups (not the positioned parent) so transforms don't conflict
+    const inners = diagram.querySelectorAll('.fto-tool__inner');
+    inners.forEach((inner, i) => {
+      gsap.to(inner, {
+        y: -6,
+        duration: 1.8,
+        ease: 'sine.inOut',
+        repeat: -1,
+        yoyo: true,
+        delay: i * 0.35,
+      });
+    });
+
+    // Dot loop: light up 1 → 10, then reset
+    const dots = diagram.querySelectorAll('.fto-dot');
+    let current = 0;
+    const total = dots.length;
+
+    function stepDot() {
+      if (current < total) {
+        gsap.to(dots[current], {
+          attr: { fill: '#FFFFFF' },
+          duration: 0.3,
+          ease: 'power1.out',
+        });
+        current++;
+      } else {
+        gsap.to(dots, {
+          attr: { fill: 'rgba(255,255,255,0.3)' },
+          duration: 0.4,
+          ease: 'power1.out',
+          onComplete: () => { current = 0; },
+        });
+      }
+    }
+
+    setInterval(stepDot, 600);
+  }
+</script>
