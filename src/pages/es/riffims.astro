@@ -8,6 +8,7 @@ import Aside from '@/components/Aside.astro';
 import Footer from '@/components/Footer.astro';
 import BadgeTicker from '@/components/BadgeTicker.astro';
 import FiveToOneDiagram from '@/components/FiveToOneDiagram.astro';
+import ManagerHierarchy from '@/components/ManagerHierarchy.astro';
 import { useTranslations } from '@/i18n';
 
 const lang = 'es';
@@ -82,6 +83,8 @@ const t = useTranslations(lang);
           <h3 class="case-subsection__title">{t('case.riffims.s1.p3.title')}</h3>
           <p class="case-subsection__text">{t('case.riffims.s1.p3.body')}</p>
         </div>
+
+        <ManagerHierarchy lang="es" />
 
         <div class="case-subsection">
           <h3 class="case-subsection__title">{t('case.riffims.s1.p4.title')}</h3>

@@ -1,0 +1,259 @@
+---
+interface Props {
+  lang: 'en' | 'es';
+}
+
+const { lang } = Astro.props;
+
+const rootTitle = lang === 'es' ? 'Cuenta de manager' : 'Manager account';
+const rootSub = lang === 'es' ? 'un login' : 'one login';
+const caption = lang === 'es'
+  ? 'Row Level Security aísla cada artista. Un manager solo ve los suyos.'
+  : 'Row Level Security isolates each artist. A manager only sees their own.';
+
+const artists = lang === 'es'
+  ? [
+      { name: 'Artista 1', releases: '2 lanzamientos', level: 'Nivel 6', done: 6 },
+      { name: 'Artista 2', releases: '1 lanzamiento',  level: 'Nivel 2', done: 2 },
+      { name: 'Artista 3', releases: '3 lanzamientos', level: 'Nivel 10', done: 10 },
+    ]
+  : [
+      { name: 'Artist 1', releases: '2 releases', level: 'Level 6', done: 6 },
+      { name: 'Artist 2', releases: '1 release',  level: 'Level 2', done: 2 },
+      { name: 'Artist 3', releases: '3 releases',  level: 'Level 10', done: 10 },
+    ];
+
+const ariaLabel = lang === 'es'
+  ? 'Una cuenta de manager, tres artistas independientes'
+  : 'One manager account, three independent artists';
+
+const artistXPositions = [60, 300, 540];
+---
+
+<figure class="manager-hierarchy" role="img" aria-label={ariaLabel}>
+  <svg
+    viewBox="0 0 800 280"
+    xmlns="http://www.w3.org/2000/svg"
+    class="manager-hierarchy__svg"
+  >
+    <!-- Level 1: Manager account -->
+    <g class="mh-root" transform="translate(300,24)">
+      <rect width="200" height="56" rx="14" class="mh-root__bg" />
+      <text x="100" y="26" text-anchor="middle" class="mh-root__title">{rootTitle}</text>
+      <text x="100" y="43" text-anchor="middle" class="mh-root__sub">{rootSub}</text>
+    </g>
+
+    <!-- Connectors -->
+    <g class="mh-links" fill="none" stroke="var(--mh-line)" stroke-width="2" stroke-linecap="round">
+      <path class="mh-link" d="M400 80 V108" />
+      <path class="mh-link" d="M160 108 H640" />
+      <path class="mh-link" d="M160 108 V136" />
+      <path class="mh-link" d="M400 108 V136" />
+      <path class="mh-link" d="M640 108 V136" />
+    </g>
+
+    <!-- Level 2: Three artist cards -->
+    {artists.map((artist, i) => {
+      const x = artistXPositions[i];
+      return (
+        <g class="mh-artist" data-index={i} transform={`translate(${x},136)`}>
+          <g class="mh-artist__inner">
+            <rect width="200" height="56" rx="14" class="mh-artist__bg" />
+            <circle cx="30" cy="28" r="13" class="mh-artist__avatar" />
+            <text x="54" y="26" class="mh-artist__name">{artist.name}</text>
+            <text x="54" y="42" class="mh-artist__releases">{artist.releases}</text>
+          </g>
+
+          <!-- Progress dots -->
+          <g class="mh-dots" transform="translate(19,84)">
+            {Array.from({ length: 10 }).map((_, d) => (
+              <circle
+                class={`mh-dot ${d < artist.done ? 'is-done' : ''}`}
+                data-index={d}
+                cx={d * 18}
+                cy="0"
+                r="5"
+              />
+            ))}
+          </g>
+          <text x="100" y="112" text-anchor="middle" class="mh-level">{artist.level}</text>
+        </g>
+      );
+    })}
+  </svg>
+  <figcaption>{caption}</figcaption>
+</figure>
+
+<style lang="scss">
+  @use '../styles/tokens' as *;
+
+  .manager-hierarchy {
+    --mh-line: var(--color-border);
+    --mh-muted: var(--color-text-tertiary);
+    --mh-ink: var(--color-text-primary);
+    --mh-surface: var(--color-bg-primary);
+    --mh-accent: var(--color-link);
+    --mh-root-bg: var(--color-text-primary);
+    --mh-root-text: var(--color-bg-primary);
+
+    margin: $space-16 auto;
+    padding: $space-6 0;
+    max-width: 800px;
+  }
+
+  .manager-hierarchy__svg {
+    width: 100%;
+    height: auto;
+    display: block;
+    overflow: visible;
+    font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+
+  .manager-hierarchy figcaption {
+    font-size: 0.75rem;
+    line-height: 1.5;
+    letter-spacing: 0.025em;
+    color: var(--color-text-tertiary);
+    text-align: center;
+    margin-top: $space-3;
+  }
+
+  /* Root card — inverted: dark bg in light, light bg in dark */
+  .mh-root__bg {
+    fill: var(--mh-root-bg);
+  }
+
+  .mh-root__title {
+    fill: var(--mh-root-text);
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .mh-root__sub {
+    fill: var(--mh-root-text);
+    font-size: 11px;
+    font-weight: 400;
+    opacity: 0.6;
+  }
+
+  /* Connectors — dashed flowing lines */
+  .mh-link {
+    stroke-dasharray: 6 4;
+    animation: mh-flow 1.4s linear infinite;
+  }
+
+  @keyframes mh-flow {
+    to {
+      stroke-dashoffset: -10;
+    }
+  }
+
+  /* Artist cards */
+  .mh-artist__bg {
+    fill: var(--mh-surface);
+    stroke: var(--mh-line);
+    stroke-width: 2;
+  }
+
+  .mh-artist__avatar {
+    fill: var(--mh-accent);
+  }
+
+  .mh-artist__name {
+    fill: var(--mh-ink);
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .mh-artist__releases {
+    fill: var(--mh-muted);
+    font-size: 11px;
+    font-weight: 400;
+  }
+
+  /* Progress dots */
+  .mh-dot {
+    fill: var(--mh-line);
+  }
+
+  .mh-dot.is-done {
+    fill: var(--mh-accent);
+  }
+
+  .mh-level {
+    fill: var(--mh-muted);
+    font-size: 11px;
+    font-weight: 400;
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+
+  const diagram = document.querySelector('.manager-hierarchy');
+  if (diagram) {
+    const root = diagram.querySelector('.mh-root');
+    const links = diagram.querySelectorAll('.mh-link');
+    const artistInners = diagram.querySelectorAll('.mh-artist__inner');
+    const artistGroups = diagram.querySelectorAll('.mh-artist');
+    const avatars = diagram.querySelectorAll('.mh-artist__avatar');
+
+    // Entrance timeline
+    const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
+
+    tl.fromTo(root!, { opacity: 0, y: -10 }, {
+      opacity: 1, y: 0, duration: 0.5,
+    });
+
+    tl.fromTo(links, { opacity: 0 }, {
+      opacity: 1, duration: 0.3, stagger: 0.06,
+    }, '-=0.2');
+
+    tl.fromTo(artistInners, { opacity: 0, y: 8 }, {
+      opacity: 1, y: 0, duration: 0.4, stagger: 0.12,
+    }, '-=0.1');
+
+    // Dots fill up sequentially per artist after cards appear
+    tl.call(() => {
+      artistGroups.forEach((artist, i) => {
+        const dots = artist.querySelectorAll('.mh-dot.is-done');
+        gsap.fromTo(dots,
+          { attr: { r: 0 } },
+          {
+            attr: { r: 5 },
+            duration: 0.2,
+            stagger: 0.06,
+            delay: i * 0.15,
+            ease: 'back.out(2)',
+          }
+        );
+      });
+
+      // Levels fade in
+      const levels = diagram.querySelectorAll('.mh-level');
+      gsap.fromTo(levels, { opacity: 0 }, {
+        opacity: 1, duration: 0.4, delay: 0.8,
+      });
+    });
+
+    // Subtle avatar pulse loop
+    avatars.forEach((avatar, i) => {
+      gsap.to(avatar, {
+        attr: { r: 15 },
+        duration: 1.6,
+        ease: 'sine.inOut',
+        repeat: -1,
+        yoyo: true,
+        delay: i * 0.5,
+      });
+    });
+
+    // Caption fade in
+    const caption = diagram.querySelector('figcaption');
+    if (caption) {
+      gsap.fromTo(caption, { opacity: 0, y: 6 }, {
+        opacity: 1, y: 0, duration: 0.5, delay: 1.5, ease: 'power2.out',
+      });
+    }
+  }
+</script>
