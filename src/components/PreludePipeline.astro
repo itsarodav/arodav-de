@@ -1,0 +1,209 @@
+---
+import { useTranslations } from '@/i18n';
+
+interface Props {
+  lang: 'en' | 'es';
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const steps = [
+  { title: t('case.prelude.pipeline.step1'), sub: t('case.prelude.pipeline.step1_sub') },
+  { title: t('case.prelude.pipeline.step2'), sub: t('case.prelude.pipeline.step2_sub') },
+  { title: t('case.prelude.pipeline.step3'), sub: t('case.prelude.pipeline.step3_sub') },
+  { title: t('case.prelude.pipeline.step4'), sub: t('case.prelude.pipeline.step4_sub') },
+];
+
+// Layout constants
+const viewW = 720;
+const viewH = 170;
+const stationY = 90;
+const stationXs = [80, 266, 452, 640];
+// Chevrons right before each station (except the first)
+const chevronXs = stationXs.slice(1).map((x) => x - 18);
+---
+
+<figure class="prelude-pipeline" role="img" aria-label={t('case.prelude.pipeline.title_sr')}>
+  <svg
+    viewBox={`0 0 ${viewW} ${viewH}`}
+    xmlns="http://www.w3.org/2000/svg"
+    class="prelude-pipeline__svg"
+  >
+    <!-- rail -->
+    <line
+      x1={stationXs[0]} y1={stationY}
+      x2={stationXs[3]} y2={stationY}
+      class="pp-rail"
+    />
+
+    <!-- chevrons (right before each destination station) -->
+    {chevronXs.map((cx) => (
+      <path
+        d={`M${cx} ${stationY - 5} l6 5 l-6 5`}
+        class="pp-chevron"
+      />
+    ))}
+
+    <!-- stations -->
+    <circle cx={stationXs[0]} cy={stationY} r="7" class="pp-station pp-station--active" />
+    {stationXs.slice(1).map((cx) => (
+      <g>
+        <circle cx={cx} cy={stationY} r="7" class="pp-station" />
+        <circle cx={cx} cy={stationY} r="2.6" class="pp-station-dot" />
+      </g>
+    ))}
+
+    <!-- labels -->
+    {steps.map((step, i) => (
+      <g>
+        <text class="pp-title" x={stationXs[i]} y="38" text-anchor="middle">{step.title}</text>
+        <text class="pp-sub" x={stationXs[i]} y="60" text-anchor="middle">{step.sub}</text>
+      </g>
+    ))}
+
+    <!-- manual bracket -->
+    <path d="M32 114 v6 h96 v-6" class="pp-bracket pp-bracket--accent" />
+    <text class="pp-bracket-label pp-bracket-label--accent" x="80" y="142" text-anchor="middle">{t('case.prelude.pipeline.manual')}</text>
+
+    <!-- auto bracket -->
+    <path d="M212 114 v6 h476 v-6" class="pp-bracket" />
+    <text class="pp-bracket-label" x="450" y="142" text-anchor="middle">{t('case.prelude.pipeline.auto')}</text>
+  </svg>
+  <figcaption class="prelude-pipeline__caption">{t('case.prelude.pipeline.caption')}</figcaption>
+</figure>
+
+<script>
+  import { gsap } from 'gsap';
+
+  const diagram = document.querySelector('.prelude-pipeline');
+  if (diagram) {
+    const stations = diagram.querySelectorAll('.pp-station, .pp-station--active');
+    const chevrons = diagram.querySelectorAll('.pp-chevron');
+
+    stations.forEach((station, i) => {
+      gsap.from(station, {
+        scale: 0,
+        opacity: 0,
+        duration: 0.5,
+        delay: 0.2 + i * 0.15,
+        ease: 'back.out(2)',
+        transformOrigin: '50% 50%',
+      });
+    });
+
+    chevrons.forEach((chev, i) => {
+      gsap.from(chev, {
+        opacity: 0,
+        x: -6,
+        duration: 0.4,
+        delay: 0.5 + i * 0.15,
+        ease: 'power2.out',
+      });
+    });
+  }
+</script>
+
+<style lang="scss">
+  @use '../styles/tokens' as *;
+
+  .prelude-pipeline {
+    margin: $space-12 0;
+    padding: $space-4 0;
+  }
+
+  .prelude-pipeline__svg {
+    width: 100%;
+    height: auto;
+    display: block;
+    overflow: visible;
+    font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+
+  .prelude-pipeline__caption {
+    text-align: center;
+    font-size: $text-sm;
+    color: var(--color-text-tertiary);
+    margin-top: $space-6;
+    line-height: $line-normal;
+  }
+
+  .pp-rail {
+    stroke: currentColor;
+    stroke-opacity: 0.22;
+    stroke-width: 2;
+    stroke-dasharray: 6 4;
+    stroke-linecap: round;
+    animation: pp-flow 1.2s linear infinite;
+  }
+
+  @keyframes pp-flow {
+    to {
+      stroke-dashoffset: -10;
+    }
+  }
+
+  .pp-chevron {
+    fill: none;
+    stroke: currentColor;
+    stroke-opacity: 0.35;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .pp-station {
+    fill: var(--color-bg-primary);
+    stroke: currentColor;
+    stroke-opacity: 0.45;
+    stroke-width: 1.8;
+  }
+
+  .pp-station--active {
+    fill: var(--color-link);
+    stroke: none;
+  }
+
+  .pp-station-dot {
+    fill: currentColor;
+    fill-opacity: 0.45;
+  }
+
+  .pp-title {
+    fill: currentColor;
+    font-size: 17px;
+    font-weight: 600;
+  }
+
+  .pp-sub {
+    fill: currentColor;
+    font-size: 12px;
+    opacity: 0.55;
+    letter-spacing: -0.01em;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+
+  .pp-bracket {
+    fill: none;
+    stroke: currentColor;
+    stroke-opacity: 0.3;
+    stroke-width: 1.4;
+  }
+
+  .pp-bracket--accent {
+    stroke: var(--color-link);
+    stroke-opacity: 0.7;
+  }
+
+  .pp-bracket-label {
+    fill: currentColor;
+    font-size: 12px;
+    font-weight: 500;
+    opacity: 0.55;
+  }
+
+  .pp-bracket-label--accent {
+    fill: var(--color-link);
+    opacity: 1;
+  }
+</style>

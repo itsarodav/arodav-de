@@ -6,6 +6,10 @@ import Breadcrumb from '@/components/Breadcrumb.astro';
 import BackButton from '@/components/BackButton.astro';
 import Aside from '@/components/Aside.astro';
 import Footer from '@/components/Footer.astro';
+import PreludePipeline from '@/components/PreludePipeline.astro';
+import PreludeBundle from '@/components/PreludeBundle.astro';
+import PreludeSizes from '@/components/PreludeSizes.astro';
+import PreludeRoadmap from '@/components/PreludeRoadmap.astro';
 import { useTranslations } from '@/i18n';
 
 const lang = 'es';
@@ -54,15 +58,21 @@ const t = useTranslations(lang);
         <p class="case-section__text">{t('case.prelude.s1.p1')}</p>
         <p class="case-section__text">{t('case.prelude.s1.p2')}</p>
 
+        <PreludeBundle lang={lang} />
+
         <div class="case-subsection">
           <h3 class="case-subsection__title">{t('case.prelude.s1.p1.title')}</h3>
           <p class="case-subsection__text">{t('case.prelude.s1.p1.body')}</p>
         </div>
 
+        <PreludePipeline lang={lang} />
+
         <div class="case-subsection">
           <h3 class="case-subsection__title">{t('case.prelude.s1.p2.title')}</h3>
           <p class="case-subsection__text">{t('case.prelude.s1.p2.body')}</p>
         </div>
+
+        <PreludeSizes lang={lang} />
 
         <div class="case-subsection">
           <h3 class="case-subsection__title">{t('case.prelude.s1.p3.title')}</h3>
@@ -104,6 +114,9 @@ const t = useTranslations(lang);
         <h2 class="case-section__title">{t('case.prelude.s4.title')}</h2>
         <p class="case-section__text">{t('case.prelude.s4.p1')}</p>
         <p class="case-section__text">{t('case.prelude.s4.p2')}</p>
+
+        <PreludeRoadmap lang={lang} />
+
         <p class="case-section__text">{t('case.prelude.s4.p3')}</p>
       </section>
     <Footer lang={lang} />
