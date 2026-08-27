@@ -15,34 +15,38 @@ const artists = [
 ];
 
 // Layout constants
-const padX = 16;
-const padY = 20;
-
-// Shared box (top)
-const sharedW = 400;
-const sharedH = 64;
-const sharedX = padX + 140 - padX;
-const sharedY = padY;
+const padX = 40;
 
 // Artist boxes (bottom row)
 const artistW = 160;
 const artistH = 50;
 const artistGap = 20;
 const artistTotalW = artistW * 3 + artistGap * 2;
-const artistStartX = (sharedX + sharedW / 2) - artistTotalW / 2;
-const artistY = sharedY + sharedH + 66;
 
-// Arrows
+// Shared box (top) — centered, narrower than artist row
+const sharedW = 400;
+const sharedH = 64;
+
+// Center everything based on the widest element
+const contentW = Math.max(sharedW, artistTotalW);
+const viewW = contentW + padX * 2;
+const centerX = viewW / 2;
+
+const sharedX = centerX - sharedW / 2;
+const artistStartX = centerX - artistTotalW / 2;
+
+// Vertical layout — centered within viewBox
+const arrowGap = 56;
+const footerGap = 28;
+const contentH = sharedH + arrowGap + artistH + footerGap + 14; // 14 ≈ footer text height
+const padY = Math.round((contentH + 40 - contentH) / 2 + 10); // ~30px top/bottom
+
+const sharedY = padY;
+const artistY = sharedY + sharedH + arrowGap;
 const arrowStartY = sharedY + sharedH;
 const arrowEndY = artistY;
-
-// View dimensions
-const viewW = Math.max(sharedX + sharedW, artistStartX + artistTotalW) + padX;
-const viewH = artistY + artistH + 56;
-
-// Footer text
-const footerY = artistY + artistH + 34;
-const centerX = sharedX + sharedW / 2;
+const footerY = artistY + artistH + footerGap;
+const viewH = footerY + 14 + padY;
 ---
 
 <figure class="theme-diagram" role="img" aria-label={t('case.linkims.theme_diagram.title_sr')}>
