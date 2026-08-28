@@ -36,13 +36,16 @@ const resumePath = lang === 'es'
     <button class="footer__link footer__copy" type="button" data-copy="hi@arodav.com">
       {t('footer.email')}
       <span class="footer__copy-wrap">
-        <svg class="footer__copy-icon footer__copy-icon--copy" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
-          <rect x="9" y="9" width="13" height="13" rx="2" stroke="currentColor" stroke-width="2.5" />
-          <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" />
+        <svg class="footer__copy-blur" width="0" height="0" aria-hidden="true">
+          <filter id="copy-motion-blur">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="0 0" />
+          </filter>
         </svg>
-        <svg class="footer__copy-icon footer__copy-icon--check" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
-          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2.5" />
-          <path d="M8 12.5l2.5 2.5L16 9.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+        <span class="footer__copy-icon footer__copy-icon--copy">
+          <Icon name="copy-btn" size={14} color="currentColor" role="decorative" />
+        </span>
+        <svg class="footer__copy-icon footer__copy-icon--check" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M12 1C5.925 1 1 5.925 1 12s4.925 11 11 11 11-4.925 11-11S18.075 1 12 1zm4.768 8.36a1 1 0 10-1.536-1.28l-4.3 5.159-1.965-1.965a1 1 0 00-1.414 1.414l2.75 2.75a1 1 0 001.475-.067l5-6z" />
         </svg>
       </span>
     </button>
@@ -115,6 +118,11 @@ const resumePath = lang === 'es'
       position: relative;
     }
 
+    &__copy-blur {
+      position: absolute;
+      pointer-events: none;
+    }
+
     &__copy-wrap {
       position: relative;
       width: 14px;
@@ -125,8 +133,16 @@ const resumePath = lang === 'es'
     &__copy-icon {
       position: absolute;
       inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       transition: opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1),
                   transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+      filter: url(#copy-motion-blur);
+
+      :global(svg) {
+        display: block;
+      }
 
       &--copy {
         opacity: 1;
@@ -170,6 +186,28 @@ const resumePath = lang === 'es'
 </style>
 
 <script>
+  function animateBlur(blur: SVGFEGaussianBlurElement, stdY: number, duration: number): Promise<void> {
+    return new Promise((resolve) => {
+      const start = performance.now();
+      const peak = stdY;
+
+      function tick(now: number) {
+        const t = Math.min((now - start) / duration, 1);
+        // ease-out: ramp up fast, settle back to 0
+        const value = peak * Math.sin(t * Math.PI);
+        blur.setAttribute('stdDeviation', `0 ${value.toFixed(2)}`);
+        if (t < 1) {
+          requestAnimationFrame(tick);
+        } else {
+          blur.setAttribute('stdDeviation', '0 0');
+          resolve();
+        }
+      }
+
+      requestAnimationFrame(tick);
+    });
+  }
+
   document.querySelectorAll<HTMLButtonElement>('.footer__copy').forEach((btn) => {
     btn.addEventListener('click', async () => {
       const text = btn.dataset.copy;
@@ -188,8 +226,13 @@ const resumePath = lang === 'es'
         document.body.removeChild(textarea);
       }
 
+      const blur = btn.querySelector<SVGFEGaussianBlurElement>('#copy-motion-blur feGaussianBlur');
+      if (blur) animateBlur(blur, 1.5, 300);
+
       btn.setAttribute('data-copied', '');
       setTimeout(() => {
+        const blurEl = btn.querySelector<SVGFEGaussianBlurElement>('#copy-motion-blur feGaussianBlur');
+        if (blurEl) animateBlur(blurEl, 1.5, 300);
         btn.removeAttribute('data-copied');
       }, 2000);
     });
