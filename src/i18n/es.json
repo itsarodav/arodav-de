@@ -15,6 +15,7 @@
 
   "hero.name": "Andrea Robles Dávila",
   "hero.bio_1a": "Soy Design Engineer. Actualmente en",
+  "hero.formerly": " (antes conocida como ODILO)",
   "hero.bio_1b": ", donde lidero el sistema de diseño de &ldquo;Memoria Digital&rdquo;. Construyendo mis propias cosas, cada día. Todo bajo",
   "hero.bio_1c": ".",
   "hero.bio_2": "Trabajo en la capa sobre la que otros desarrolladores construyen. Nombrado, estados, variantes y edge cases se deciden antes de que nadie más tenga que pensar en ellos. La misma persona decidiendo en diseño y llevándolo a código, así lo que se diseña es lo que se lanza.",
@@ -32,7 +33,7 @@
   "work.prelude.name": "Prelude Icons",
   "work.prelude.description": "Iconos que van directo del diseño al código",
 
-  "experience.odilo.company": "ODILO",
+  "experience.odilo.company": "LETMINO (antes ODILO)",
   "experience.odilo.role_current": "Design Engineer",
   "experience.odilo.period_current": "Abril 2026 – Presente",
   "experience.odilo.description_current": "El primero en la empresa. Trabajando en desarrollo UI, diseño y dirección de producto.",

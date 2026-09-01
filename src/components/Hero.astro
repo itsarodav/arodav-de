@@ -20,10 +20,11 @@ const logoSvg = await import('/src/icons/arodav-profilee.svg?raw');
   <p class="hero__bio">
     <Fragment set:html={t('hero.bio_1a')} />
     {' '}
-    <a class="hero__link" href="https://www.odilo.us/" target="_blank" rel="noopener noreferrer">
-      ODILO
+    <a class="hero__link" href="https://letmino.ai/" target="_blank" rel="noopener noreferrer">
+      LETMINO
       <Icon name="arrow-out" size={14} color="currentColor" role="decorative" />
     </a>
+    <span class="hero__formerly">{t('hero.formerly')}</span>
     <Fragment set:html={t('hero.bio_1b')} />
     {' '}
     <a class="hero__link" href="https://github.com/itsarodav" target="_blank" rel="noopener noreferrer">
