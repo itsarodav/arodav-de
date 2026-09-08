@@ -24,8 +24,8 @@ const cards = [
     sub2: t('case.prelude.roadmap.qa_sub2'),
   },
   {
-    x: 396, delivered: false,
-    status: t('case.prelude.roadmap.later'),
+    x: 396, delivered: true,
+    status: t('case.prelude.roadmap.delivered'),
     title: t('case.prelude.roadmap.package'),
     sub1: t('case.prelude.roadmap.package_sub1'),
     sub2: t('case.prelude.roadmap.package_sub2'),
@@ -39,7 +39,7 @@ const cards = [
   },
 ];
 
-const chevronXs = [375, 573];
+const chevronXs = [177, 375, 573];
 ---
 
 <figure class="prelude-roadmap" role="img" aria-label={t('case.prelude.roadmap.title_sr')}>
@@ -49,8 +49,8 @@ const chevronXs = [375, 573];
     class="prelude-roadmap__svg"
   >
     <!-- TODAY marker -->
-    <text class="pr-today" x="182" y="42" text-anchor="middle">{t('case.prelude.roadmap.today')}</text>
-    <line x1="182" y1="54" x2="182" y2="200" class="pr-today-line" />
+    <text class="pr-today" x="578" y="42" text-anchor="middle">{t('case.prelude.roadmap.today')}</text>
+    <line x1="578" y1="54" x2="578" y2="200" class="pr-today-line" />
 
     <!-- Cards -->
     {cards.map((card, i) => (
@@ -119,18 +119,18 @@ const chevronXs = [375, 573];
       });
     });
 
-    // Pulse on the delivered check circle
-    const checkCircle = diagram.querySelector('.pr-check-circle');
-    if (checkCircle) {
-      gsap.to(checkCircle, {
+    // Pulse on all delivered check circles
+    const checkCircles = diagram.querySelectorAll('.pr-check-circle');
+    checkCircles.forEach((circle, i) => {
+      gsap.to(circle, {
         attr: { r: 7.5 },
         duration: 1.4,
         ease: 'sine.inOut',
         repeat: -1,
         yoyo: true,
-        delay: 1,
+        delay: 1 + i * 0.3,
       });
-    }
+    });
   }
 </script>
 
